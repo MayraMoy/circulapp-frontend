@@ -16,48 +16,57 @@ import {
   Paper
 } from '@mui/material';
 import {
-  EcoOutlined as EcoIcon,
-  Recycle,
-  People,
-  LocationOn,
-  TrendingUp,
-  Security,
-  Speed,
-  Star,
   ArrowForward
 } from '@mui/icons-material';
+
+// Componentes para iconos emoji - Simple y sin problemas
+const EcoIcon = ({ fontSize }) => (
+  <span style={{ 
+    fontSize: fontSize === 32 ? '32px' : fontSize === 80 ? '80px' : '24px',
+    lineHeight: 1,
+    marginRight: fontSize === 32 ? '8px' : '0'
+  }}>
+    🌱
+  </span>
+);
+
+const RecycleIcon = () => <span style={{ fontSize: '40px' }}>♻️</span>;
+const PeopleIcon = () => <span style={{ fontSize: '40px' }}>👥</span>;
+const LocationIcon = () => <span style={{ fontSize: '40px' }}>📍</span>;
+const SecurityIcon = () => <span style={{ fontSize: '40px' }}>🔒</span>;
+const StarIcon = () => <span style={{ fontSize: '24px' }}>⭐</span>;
 
 const Home = () => {
   const navigate = useNavigate();
 
   const features = [
     {
-      icon: <Recycle sx={{ fontSize: 40 }} />,
+      icon: <RecycleIcon />,
       title: 'Economía Circular',
       description: 'Da una segunda vida a tus objetos y encuentra lo que necesitas de manera sostenible.'
     },
     {
-      icon: <People sx={{ fontSize: 40 }} />,
+      icon: <PeopleIcon />,
       title: 'Comunidad Local',
       description: 'Conecta con personas de tu zona y fortalece los lazos comunitarios.'
     },
     {
-      icon: <LocationOn sx={{ fontSize: 40 }} />,
+      icon: <LocationIcon />,
       title: 'Cerca de Ti',
       description: 'Encuentra productos y servicios en tu área local para reducir la huella de carbono.'
     },
     {
-      icon: <Security sx={{ fontSize: 40 }} />,
+      icon: <SecurityIcon />,
       title: 'Seguro y Confiable',
       description: 'Sistema de reputación y verificación para transacciones seguras.'
     }
   ];
 
   const stats = [
-    { number: '2,500+', label: 'Productos Donados', icon: <Recycle /> },
-    { number: '1,200+', label: 'Usuarios Activos', icon: <People /> },
+    { number: '2,500+', label: 'Productos Donados', icon: <RecycleIcon /> },
+    { number: '1,200+', label: 'Usuarios Activos', icon: <PeopleIcon /> },
     { number: '850kg', label: 'CO₂ Ahorrado', icon: <EcoIcon /> },
-    { number: '98%', label: 'Satisfacción', icon: <Star /> }
+    { number: '98%', label: 'Satisfacción', icon: <StarIcon /> }
   ];
 
   const testimonials = [
@@ -87,7 +96,7 @@ const Home = () => {
       <AppBar position="static" elevation={0} sx={{ bgcolor: 'transparent', color: 'primary.main' }}>
         <Toolbar sx={{ justifyContent: 'space-between' }}>
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
-            <EcoIcon sx={{ fontSize: 32, mr: 1 }} />
+            <EcoIcon fontSize={32} />
             <Typography variant="h6" component="div" fontWeight="bold">
               CirculApp
             </Typography>
@@ -180,22 +189,22 @@ const Home = () => {
                     position: 'relative'
                   }}
                 >
-                  <EcoIcon sx={{ fontSize: 80, opacity: 0.8 }} />
+                  <EcoIcon fontSize={80} />
                   
                   {/* Iconos orbitando */}
                   <Box sx={{ position: 'absolute', top: -20, right: -20 }}>
                     <Avatar sx={{ bgcolor: 'secondary.main' }}>
-                      <Recycle />
+                      <RecycleIcon />
                     </Avatar>
                   </Box>
                   <Box sx={{ position: 'absolute', bottom: -20, left: -20 }}>
                     <Avatar sx={{ bgcolor: 'success.main' }}>
-                      <People />
+                      <PeopleIcon />
                     </Avatar>
                   </Box>
                   <Box sx={{ position: 'absolute', top: 50, left: -30 }}>
                     <Avatar sx={{ bgcolor: 'warning.main' }}>
-                      <LocationOn />
+                      <LocationIcon />
                     </Avatar>
                   </Box>
                 </Box>
@@ -309,7 +318,7 @@ const Home = () => {
                         label={testimonial.location} 
                         size="small" 
                         variant="outlined"
-                        icon={<LocationOn />}
+                        icon={<LocationIcon />}
                       />
                     </Box>
                   </Box>
@@ -391,7 +400,7 @@ const Home = () => {
           <Grid container spacing={4}>
             <Grid item xs={12} md={4}>
               <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
-                <EcoIcon sx={{ fontSize: 32, mr: 1 }} />
+                <EcoIcon fontSize={32} />
                 <Typography variant="h6" fontWeight="bold">
                   CirculApp
                 </Typography>

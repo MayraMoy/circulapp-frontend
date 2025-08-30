@@ -31,11 +31,20 @@ import {
   LocationOn as LocationIcon,
   Visibility,
   VisibilityOff,
-  EcoOutlined as EcoIcon,
   ArrowBack,
   ArrowForward,
 } from "@mui/icons-material";
 import { useAuth } from "../../context/AuthContext";
+
+// Componente para el icono emoji
+const EcoIcon = () => (
+  <span style={{ 
+    fontSize: '24px', 
+    lineHeight: 1
+  }}>
+    🌱
+  </span>
+);
 
 const steps = ["Información Personal", "Ubicación", "Confirmación"];
 
@@ -319,7 +328,7 @@ const Register = () => {
     <Container maxWidth="sm">
       <Paper elevation={3} sx={{ p: 4, mt: 5 }}>
         <Typography variant="h5" align="center" gutterBottom>
-          Registro <EcoIcon color="success" />
+          Registro <EcoIcon />
         </Typography>
 
         {error && (
@@ -370,7 +379,7 @@ const Register = () => {
         <Box mt={2} textAlign="center">
           <Typography variant="body2">
             ¿Ya tienes cuenta?{" "}
-            <Link component={RouterLink} to="/auth/login">
+            <Link component={RouterLink} to="/login">
               Inicia sesión
             </Link>
           </Typography>

@@ -18,7 +18,6 @@ import {
   ListItemText
 } from '@mui/material';
 import {
-  EcoOutlined as EcoIcon,
   Search as SearchIcon,
   Add as AddIcon,
   Chat as ChatIcon,
@@ -30,6 +29,17 @@ import {
   AdminPanelSettings as AdminIcon
 } from '@mui/icons-material';
 import { useAuth } from '../../context/AuthContext';
+
+// Componente para el icono emoji
+const EcoIcon = ({ sx }) => (
+  <span style={{ 
+    fontSize: '32px', 
+    lineHeight: 1,
+    marginRight: '8px'
+  }}>
+    🌱
+  </span>
+);
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -85,7 +95,7 @@ const Navbar = () => {
           sx={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}
           onClick={() => navigate('/dashboard')}
         >
-          <EcoIcon sx={{ fontSize: 32, mr: 1 }} />
+          <EcoIcon />
           <Typography variant="h6" component="div" fontWeight="bold">
             CirculApp
           </Typography>

@@ -2,12 +2,22 @@
 import React from 'react';
 import { Box, Container, Typography, Link, Grid, IconButton } from '@mui/material';
 import { 
-  EcoOutlined as EcoIcon,
   Facebook,
   Twitter,
   Instagram,
   LinkedIn
 } from '@mui/icons-material';
+
+// Componente para el icono emoji
+const EcoIcon = ({ sx, fontSize }) => (
+  <span style={{ 
+    fontSize: fontSize === 32 ? '32px' : '24px', 
+    lineHeight: 1,
+    ...sx 
+  }}>
+    🌱
+  </span>
+);
 
 const Footer = () => {
   return (
@@ -126,154 +136,4 @@ const Footer = () => {
   );
 };
 
-// components/common/LoadingSpinner.js
-import React from 'react';
-import { Box, CircularProgress, Typography } from '@mui/material';
-
-const LoadingSpinner = ({ 
-  size = 40, 
-  message = 'Cargando...', 
-  fullScreen = false 
-}) => {
-  const content = (
-    <Box
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        gap: 2,
-        p: 3
-      }}
-    >
-      <CircularProgress size={size} color="primary" />
-      {message && (
-        <Typography variant="body2" color="text.secondary">
-          {message}
-        </Typography>
-      )}
-    </Box>
-  );
-
-  if (fullScreen) {
-    return (
-      <Box
-        sx={{
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          width: '100vw',
-          height: '100vh',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          bgcolor: 'rgba(255, 255, 255, 0.9)',
-          zIndex: 9999
-        }}
-      >
-        {content}
-      </Box>
-    );
-  }
-
-  return content;
-};
-
-// components/common/ErrorBoundary.js
-import React from 'react';
-import { Box, Typography, Button, Container, Paper } from '@mui/material';
-import { Error as ErrorIcon, Refresh as RefreshIcon } from '@mui/icons-material';
-
-class ErrorBoundary extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { hasError: false, error: null, errorInfo: null };
-  }
-
-  static getDerivedStateFromError(error) {
-    return { hasError: true };
-  }
-
-  componentDidCatch(error, errorInfo) {
-    console.error('Error capturado por ErrorBoundary:', error, errorInfo);
-    this.setState({
-      error: error,
-      errorInfo: errorInfo
-    });
-  }
-
-  handleReload = () => {
-    window.location.reload();
-  };
-
-  render() {
-    if (this.state.hasError) {
-      return (
-        <Container maxWidth="md" sx={{ py: 8 }}>
-          <Paper elevation={3} sx={{ p: 4, textAlign: 'center' }}>
-            <ErrorIcon 
-              sx={{ 
-                fontSize: 80, 
-                color: 'error.main', 
-                mb: 2 
-              }} 
-            />
-            
-            <Typography variant="h4" gutterBottom color="error">
-              ¡Oops! Algo salió mal
-            </Typography>
-            
-            <Typography variant="body1" color="text.secondary" paragraph>
-              Ha ocurrido un error inesperado. Por favor, recarga la página 
-              o contacta con soporte si el problema persiste.
-            </Typography>
-
-            <Box sx={{ mt: 3, display: 'flex', gap: 2, justifyContent: 'center' }}>
-              <Button
-                variant="contained"
-                startIcon={<RefreshIcon />}
-                onClick={this.handleReload}
-              >
-                Recargar Página
-              </Button>
-              
-              <Button
-                variant="outlined"
-                onClick={() => window.history.back()}
-              >
-                Volver Atrás
-              </Button>
-            </Box>
-
-            {process.env.NODE_ENV === 'development' && this.state.error && (
-              <Box sx={{ mt: 4, textAlign: 'left' }}>
-                <Typography variant="h6" color="error" gutterBottom>
-                  Detalles del Error (Solo en Desarrollo):
-                </Typography>
-                <Box
-                  component="pre"
-                  sx={{
-                    bgcolor: 'grey.100',
-                    p: 2,
-                    borderRadius: 1,
-                    overflow: 'auto',
-                    fontSize: '0.75rem',
-                    border: 1,
-                    borderColor: 'error.main'
-                  }}
-                >
-                  {this.state.error.toString()}
-                  {this.state.errorInfo.componentStack}
-                </Box>
-              </Box>
-            )}
-          </Paper>
-        </Container>
-      );
-    }
-
-    return this.props.children;
-  }
-}
-
-export { Footer, LoadingSpinner, ErrorBoundary };
+export default Footer;

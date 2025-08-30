@@ -21,7 +21,6 @@ import {
 import {
   Add as AddIcon,
   TrendingUp,
-  Eco as EcoIcon,
   LocalShipping,
   People,
   Star,
@@ -33,7 +32,18 @@ import {
 } from '@mui/icons-material';
 import { useAuth } from '../context/AuthContext';
 import { productService, userService } from '../services/api';
-import { LoadingSpinner } from '../components/common/LoadingSpinner';
+import LoadingSpinner from '../components/common/LoadingSpinner';
+
+// Componente para el icono emoji
+const EcoIcon = ({ sx }) => (
+  <span style={{ 
+    fontSize: '40px', 
+    lineHeight: 1,
+    opacity: 0.7
+  }}>
+    🌱
+  </span>
+);
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -179,7 +189,7 @@ const Dashboard = () => {
                     CO₂ Ahorrado
                   </Typography>
                 </Box>
-                <EcoIcon sx={{ fontSize: 40, opacity: 0.7 }} />
+                <EcoIcon />
               </Box>
             </CardContent>
           </Card>

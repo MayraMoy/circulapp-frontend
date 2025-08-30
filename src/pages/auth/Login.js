@@ -18,10 +18,21 @@ import {
   Email as EmailIcon,
   Lock as LockIcon,
   Visibility,
-  VisibilityOff,
-  EcoOutlined as EcoIcon
+  VisibilityOff
 } from '@mui/icons-material';
 import { useAuth } from '../../context/AuthContext';
+
+// Componente para el icono emoji
+const EcoIcon = ({ sx }) => (
+  <span style={{ 
+    fontSize: '48px', 
+    lineHeight: 1,
+    color: '#2E7D32',
+    marginRight: '16px'
+  }}>
+    🌱
+  </span>
+);
 
 const Login = () => {
   const navigate = useNavigate();
@@ -96,7 +107,7 @@ const Login = () => {
       <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
         {/* Logo y título */}
         <Box sx={{ display: 'flex', alignItems: 'center', mb: 3 }}>
-          <EcoIcon sx={{ fontSize: 48, color: 'primary.main', mr: 2 }} />
+          <EcoIcon />
           <Typography variant="h3" component="h1" color="primary.main" fontWeight="bold">
             CirculApp
           </Typography>
