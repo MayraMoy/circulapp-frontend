@@ -60,7 +60,7 @@ const theme = createTheme({
     text: {
       primary: '#212121',
       secondary: '#757575',
-    }
+    },
   },
   typography: {
     fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
@@ -91,7 +91,7 @@ const theme = createTheme({
     button: {
       textTransform: 'none',
       fontWeight: 500,
-    }
+    },
   },
   shape: {
     borderRadius: 8,
@@ -185,99 +185,99 @@ const AppRoutes = () => {
     <Routes>
       {/* Rutas públicas */}
       <Route path="/" element={<Home />} />
-      
-      <Route 
-        path="/login" 
+
+      <Route
+        path="/login"
         element={
           <PublicRoute>
             <Login />
           </PublicRoute>
-        } 
+        }
       />
-      
-      <Route 
-        path="/register" 
+
+      <Route
+        path="/register"
         element={
           <PublicRoute>
             <Register />
           </PublicRoute>
-        } 
+        }
       />
 
       {/* Rutas protegidas */}
-      <Route 
-        path="/dashboard" 
+      <Route
+        path="/dashboard"
         element={
           <ProtectedRoute>
             <Dashboard />
           </ProtectedRoute>
-        } 
+        }
       />
 
-      <Route 
-        path="/products" 
+      <Route
+        path="/products"
         element={
           <ProtectedRoute>
             <Products />
           </ProtectedRoute>
-        } 
+        }
       />
 
-      <Route 
-        path="/products/:id" 
+      <Route
+        path="/products/:id"
         element={
           <ProtectedRoute>
             <ProductDetail />
           </ProtectedRoute>
-        } 
+        }
       />
 
-      <Route 
-        path="/create-product" 
+      <Route
+        path="/create-product"
         element={
           <ProtectedRoute>
             <CreateProduct />
           </ProtectedRoute>
-        } 
+        }
       />
 
-      <Route 
-        path="/profile" 
+      <Route
+        path="/profile"
         element={
           <ProtectedRoute>
             <Profile />
           </ProtectedRoute>
-        } 
+        }
       />
 
-      <Route 
-        path="/chat" 
+      <Route
+        path="/chat"
         element={
           <ProtectedRoute>
             <Chat />
           </ProtectedRoute>
-        } 
+        }
       />
 
       {/* Rutas administrativas */}
-      <Route 
-        path="/admin/*" 
+      <Route
+        path="/admin/*"
         element={
           <ProtectedRoute requiredPermission="admin">
             <AdminPanel />
           </ProtectedRoute>
-        } 
+        }
       />
 
       {/* Ruta 404 */}
-      <Route 
-        path="*" 
+      <Route
+        path="*"
         element={
           <Box sx={{ textAlign: 'center', mt: 8 }}>
             <h1>404 - Página no encontrada</h1>
             <p>La página que buscas no existe.</p>
           </Box>
-        } 
+        }
       />
     </Routes>
   );

@@ -15,7 +15,7 @@ import {
   Tooltip,
   Divider,
   ListItemIcon,
-  ListItemText
+  ListItemText,
 } from '@mui/material';
 import {
   Search as SearchIcon,
@@ -26,17 +26,19 @@ import {
   Person as PersonIcon,
   Settings as SettingsIcon,
   ExitToApp as LogoutIcon,
-  AdminPanelSettings as AdminIcon
+  AdminPanelSettings as AdminIcon,
 } from '@mui/icons-material';
 import { useAuth } from '../../context/AuthContext';
 
 // Componente para el icono emoji
 const EcoIcon = ({ sx }) => (
-  <span style={{ 
-    fontSize: '32px', 
-    lineHeight: 1,
-    marginRight: '8px'
-  }}>
+  <span
+    style={{
+      fontSize: '32px',
+      lineHeight: 1,
+      marginRight: '8px',
+    }}
+  >
     🌱
   </span>
 );
@@ -45,11 +47,11 @@ const Navbar = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { user, logout, hasPermission } = useAuth();
-  
+
   const [anchorEl, setAnchorEl] = useState(null);
   const [notificationsAnchorEl, setNotificationsAnchorEl] = useState(null);
 
-  const handleMenuOpen = (event) => {
+  const handleMenuOpen = event => {
     setAnchorEl(event.currentTarget);
   };
 
@@ -57,7 +59,7 @@ const Navbar = () => {
     setAnchorEl(null);
   };
 
-  const handleNotificationsOpen = (event) => {
+  const handleNotificationsOpen = event => {
     setNotificationsAnchorEl(event.currentTarget);
   };
 
@@ -71,12 +73,12 @@ const Navbar = () => {
     navigate('/');
   };
 
-  const handleNavigation = (path) => {
+  const handleNavigation = path => {
     navigate(path);
     handleMenuClose();
   };
 
-  const isActive = (path) => {
+  const isActive = path => {
     return location.pathname === path;
   };
 
@@ -84,14 +86,14 @@ const Navbar = () => {
   const notifications = [
     { id: 1, message: 'Nueva solicitud para tu producto', time: '5 min' },
     { id: 2, message: 'Mensaje nuevo en el chat', time: '10 min' },
-    { id: 3, message: 'Tu transacción fue completada', time: '1 hora' }
+    { id: 3, message: 'Tu transacción fue completada', time: '1 hora' },
   ];
 
   return (
     <AppBar position="fixed" elevation={2}>
       <Toolbar sx={{ justifyContent: 'space-between' }}>
         {/* Logo y título */}
-        <Box 
+        <Box
           sx={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}
           onClick={() => navigate('/dashboard')}
         >
@@ -108,12 +110,12 @@ const Navbar = () => {
             startIcon={<DashboardIcon />}
             onClick={() => navigate('/dashboard')}
             variant={isActive('/dashboard') ? 'outlined' : 'text'}
-            sx={{ 
+            sx={{
               color: 'white',
               '&.MuiButton-outlined': {
                 borderColor: 'white',
-                backgroundColor: 'rgba(255, 255, 255, 0.1)'
-              }
+                backgroundColor: 'rgba(255, 255, 255, 0.1)',
+              },
             }}
           >
             Dashboard
@@ -124,12 +126,12 @@ const Navbar = () => {
             startIcon={<SearchIcon />}
             onClick={() => navigate('/products')}
             variant={isActive('/products') ? 'outlined' : 'text'}
-            sx={{ 
+            sx={{
               color: 'white',
               '&.MuiButton-outlined': {
                 borderColor: 'white',
-                backgroundColor: 'rgba(255, 255, 255, 0.1)'
-              }
+                backgroundColor: 'rgba(255, 255, 255, 0.1)',
+              },
             }}
           >
             Explorar
@@ -140,12 +142,12 @@ const Navbar = () => {
             startIcon={<AddIcon />}
             onClick={() => navigate('/create-product')}
             variant={isActive('/create-product') ? 'outlined' : 'text'}
-            sx={{ 
+            sx={{
               color: 'white',
               '&.MuiButton-outlined': {
                 borderColor: 'white',
-                backgroundColor: 'rgba(255, 255, 255, 0.1)'
-              }
+                backgroundColor: 'rgba(255, 255, 255, 0.1)',
+              },
             }}
           >
             Publicar
@@ -156,12 +158,12 @@ const Navbar = () => {
             startIcon={<ChatIcon />}
             onClick={() => navigate('/chat')}
             variant={isActive('/chat') ? 'outlined' : 'text'}
-            sx={{ 
+            sx={{
               color: 'white',
               '&.MuiButton-outlined': {
                 borderColor: 'white',
-                backgroundColor: 'rgba(255, 255, 255, 0.1)'
-              }
+                backgroundColor: 'rgba(255, 255, 255, 0.1)',
+              },
             }}
           >
             Mensajes
@@ -173,12 +175,12 @@ const Navbar = () => {
               startIcon={<AdminIcon />}
               onClick={() => navigate('/admin')}
               variant={isActive('/admin') ? 'outlined' : 'text'}
-              sx={{ 
+              sx={{
                 color: 'white',
                 '&.MuiButton-outlined': {
                   borderColor: 'white',
-                  backgroundColor: 'rgba(255, 255, 255, 0.1)'
-                }
+                  backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                },
               }}
             >
               Admin
@@ -190,11 +192,7 @@ const Navbar = () => {
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
           {/* Notificaciones */}
           <Tooltip title="Notificaciones">
-            <IconButton 
-              color="inherit" 
-              onClick={handleNotificationsOpen}
-              sx={{ color: 'white' }}
-            >
+            <IconButton color="inherit" onClick={handleNotificationsOpen} sx={{ color: 'white' }}>
               <Badge badgeContent={notifications.length} color="secondary">
                 <NotificationsIcon />
               </Badge>
@@ -204,8 +202,8 @@ const Navbar = () => {
           {/* Menú de usuario */}
           <Tooltip title="Cuenta">
             <IconButton onClick={handleMenuOpen} sx={{ p: 0, ml: 1 }}>
-              <Avatar 
-                src={user?.avatar} 
+              <Avatar
+                src={user?.avatar}
                 alt={user?.name}
                 sx={{ width: 40, height: 40, bgcolor: 'secondary.main' }}
               >
@@ -221,7 +219,7 @@ const Navbar = () => {
           open={Boolean(notificationsAnchorEl)}
           onClose={handleNotificationsClose}
           PaperProps={{
-            sx: { width: 300, maxHeight: 400 }
+            sx: { width: 300, maxHeight: 400 },
           }}
         >
           <Box sx={{ p: 2 }}>
@@ -229,7 +227,7 @@ const Navbar = () => {
           </Box>
           <Divider />
           {notifications.length > 0 ? (
-            notifications.map((notification) => (
+            notifications.map(notification => (
               <MenuItem key={notification.id} onClick={handleNotificationsClose}>
                 <Box>
                   <Typography variant="body2">{notification.message}</Typography>
@@ -255,7 +253,7 @@ const Navbar = () => {
           onClose={handleMenuClose}
           PaperProps={{
             elevation: 3,
-            sx: { mt: 1.5, minWidth: 200 }
+            sx: { mt: 1.5, minWidth: 200 },
           }}
           transformOrigin={{ horizontal: 'right', vertical: 'top' }}
           anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}

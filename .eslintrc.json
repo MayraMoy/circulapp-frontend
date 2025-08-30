@@ -1,0 +1,26 @@
+// .eslintrc.json - Configuración básica sin plugins externos
+{
+  "extends": [
+    "react-app",
+    "react-app/jest"
+  ],
+  "rules": {
+    // Console statements - permitir warn, error, info en desarrollo
+    "no-console": "off",
+    
+    // Variables no usadas - más permisivo
+    "no-unused-vars": ["warn", { 
+      "argsIgnorePattern": "^_",
+      "varsIgnorePattern": "^_",
+      "ignoreRestSiblings": true
+    }],
+    
+    // React específico - estas reglas ya vienen con react-app
+    "react-hooks/exhaustive-deps": "warn"
+  },
+  "env": {
+    "browser": true,
+    "node": true,
+    "es6": true
+  }
+}

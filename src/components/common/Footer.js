@@ -1,20 +1,17 @@
 // components/common/Footer.js
 import React from 'react';
 import { Box, Container, Typography, Link, Grid, IconButton } from '@mui/material';
-import { 
-  Facebook,
-  Twitter,
-  Instagram,
-  LinkedIn
-} from '@mui/icons-material';
+import { Facebook, Twitter, Instagram, LinkedIn } from '@mui/icons-material';
 
 // Componente para el icono emoji
 const EcoIcon = ({ sx, fontSize }) => (
-  <span style={{ 
-    fontSize: fontSize === 32 ? '32px' : '24px', 
-    lineHeight: 1,
-    ...sx 
-  }}>
+  <span
+    style={{
+      fontSize: fontSize === 32 ? '32px' : '24px',
+      lineHeight: 1,
+      ...sx,
+    }}
+  >
     🌱
   </span>
 );
@@ -27,7 +24,7 @@ const Footer = () => {
         bgcolor: 'primary.main',
         color: 'white',
         py: 6,
-        mt: 'auto'
+        mt: 'auto',
       }}
     >
       <Container maxWidth="lg">
@@ -40,8 +37,8 @@ const Footer = () => {
               </Typography>
             </Box>
             <Typography variant="body2" sx={{ mb: 2, opacity: 0.8 }}>
-              Conectando comunidades para crear un futuro más sostenible 
-              a través de la economía circular.
+              Conectando comunidades para crear un futuro más sostenible a través de la economía
+              circular.
             </Typography>
             <Box>
               <IconButton color="inherit" size="small">
@@ -123,12 +120,12 @@ const Footer = () => {
             borderColor: 'rgba(255, 255, 255, 0.2)',
             mt: 4,
             pt: 4,
-            textAlign: 'center'
+            textAlign: 'center',
           }}
         >
           <Typography variant="body2" sx={{ opacity: 0.8 }}>
-            © 2024 CirculApp. Todos los derechos reservados. 
-            Contribuyendo a un mundo más sostenible.
+            © 2024 CirculApp. Todos los derechos reservados. Contribuyendo a un mundo más
+            sostenible.
           </Typography>
         </Box>
       </Container>

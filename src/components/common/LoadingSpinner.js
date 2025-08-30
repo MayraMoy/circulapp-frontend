@@ -2,11 +2,7 @@
 import React from 'react';
 import { Box, CircularProgress, Typography } from '@mui/material';
 
-const LoadingSpinner = ({ 
-  size = 40, 
-  message = 'Cargando...', 
-  fullScreen = false 
-}) => {
+const LoadingSpinner = ({ size = 40, message = 'Cargando...', fullScreen = false }) => {
   const content = (
     <Box
       sx={{
@@ -15,7 +11,7 @@ const LoadingSpinner = ({
         alignItems: 'center',
         justifyContent: 'center',
         gap: 2,
-        p: 3
+        p: 3,
       }}
     >
       <CircularProgress size={size} color="primary" />
@@ -40,7 +36,7 @@ const LoadingSpinner = ({
           alignItems: 'center',
           justifyContent: 'center',
           bgcolor: 'rgba(255, 255, 255, 0.9)',
-          zIndex: 9999
+          zIndex: 9999,
         }}
       >
         {content}
