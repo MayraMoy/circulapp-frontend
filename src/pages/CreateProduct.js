@@ -19,15 +19,9 @@ import {
   CardMedia,
   IconButton,
   Chip,
-  LinearProgress
+  LinearProgress,
 } from '@mui/material';
-import {
-  CloudUpload,
-  Delete,
-  ArrowBack,
-  Save,
-  Visibility
-} from '@mui/icons-material';
+import { CloudUpload, Delete, ArrowBack, Save, Visibility } from '@mui/icons-material';
 import { useAuth } from '../context/AuthContext';
 import { productService } from '../services/api';
 
@@ -38,7 +32,7 @@ const CreateProduct = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [uploadProgress, setUploadProgress] = useState(0);
-  
+
   const [formData, setFormData] = useState({
     title: '',
     description: '',
@@ -50,8 +44,8 @@ const CreateProduct = () => {
       address: user?.location?.address || '',
       city: user?.location?.city || '',
       province: user?.location?.province || '',
-      coordinates: user?.location?.coordinates || { lat: null, lng: null }
-    }
+      coordinates: user?.location?.coordinates || { lat: null, lng: null },
+    },
   });
 
   const [images, setImages] = useState([]);
@@ -59,20 +53,28 @@ const CreateProduct = () => {
   const [errors, setErrors] = useState({});
 
   const categories = [
-    'Electrónicos', 'Muebles', 'Ropa', 'Libros', 'Deportes',
-    'Juguetes', 'Hogar', 'Jardín', 'Herramientas', 'Otros'
+    'Electrónicos',
+    'Muebles',
+    'Ropa',
+    'Libros',
+    'Deportes',
+    'Juguetes',
+    'Hogar',
+    'Jardín',
+    'Herramientas',
+    'Otros',
   ];
 
   const conditions = ['Nuevo', 'Como nuevo', 'Muy bueno', 'Bueno', 'Regular'];
 
-  const handleInputChange = (e) => {
+  const handleInputChange = e => {
     const { name, value } = e.target;
-    
+
     if (name.startsWith('location.')) {
       const field = name.split('.')[1];
       setFormData(prev => ({
         ...prev,
-        location: { ...prev.location, [field]: value }
+        location: { ...prev.location, [field]: value },
       }));
     } else {
       setFormData(prev => ({ ...prev, [name]: value }));
@@ -84,22 +86,23 @@ const CreateProduct = () => {
     }
   };
 
-  const handleImageUpload = (e) => {
+  const handleImageUpload = e => {
     const files = Array.from(e.target.files);
-    
+
     if (images.length + files.length > 5) {
       setError('Máximo 5 imágenes permitidas');
       return;
     }
 
     files.forEach(file => {
-      if (file.size > 5 * 1024 * 1024) { // 5MB
+      if (file.size > 5 * 1024 * 1024) {
+        // 5MB
         setError('Cada imagen debe ser menor a 5MB');
         return;
       }
 
       const reader = new FileReader();
-      reader.onload = (e) => {
+      reader.onload = e => {
         setImagePreviews(prev => [...prev, e.target.result]);
       };
       reader.readAsDataURL(file);
@@ -109,7 +112,7 @@ const CreateProduct = () => {
     setError('');
   };
 
-  const removeImage = (index) => {
+  const removeImage = index => {
     setImages(prev => prev.filter((_, i) => i !== index));
     setImagePreviews(prev => prev.filter((_, i) => i !== index));
   };
@@ -127,9 +130,9 @@ const CreateProduct = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async e => {
     e.preventDefault();
-    
+
     if (!validateForm()) return;
 
     try {
@@ -151,9 +154,8 @@ const CreateProduct = () => {
       }
 
       navigate(`/products/${productId}`, {
-        state: { message: 'Producto creado exitosamente' }
+        state: { message: 'Producto creado exitosamente' },
       });
-
     } catch (err) {
       setError(err.response?.data?.message || 'Error al crear el producto');
       console.error('Error creating product:', err);
@@ -323,7 +325,7 @@ const CreateProduct = () => {
               <Typography variant="h6" gutterBottom sx={{ mt: 2 }}>
                 Imágenes
               </Typography>
-              
+
               <Box sx={{ mb: 2 }}>
                 <input
                   type="file"
@@ -362,7 +364,7 @@ const CreateProduct = () => {
                             top: 4,
                             right: 4,
                             bgcolor: 'rgba(255,255,255,0.8)',
-                            '&:hover': { bgcolor: 'rgba(255,255,255,0.9)' }
+                            '&:hover': { bgcolor: 'rgba(255,255,255,0.9)' },
                           }}
                           size="small"
                           onClick={() => removeImage(index)}
@@ -379,7 +381,7 @@ const CreateProduct = () => {
             {/* Botones de acción */}
             <Grid item xs={12}>
               {loading && <LinearProgress sx={{ mb: 2 }} />}
-              
+
               <Box sx={{ display: 'flex', gap: 2, justifyContent: 'flex-end' }}>
                 <Button
                   variant="outlined"
@@ -388,13 +390,8 @@ const CreateProduct = () => {
                 >
                   Cancelar
                 </Button>
-                
-                <Button
-                  type="submit"
-                  variant="contained"
-                  startIcon={<Save />}
-                  disabled={loading}
-                >
+
+                <Button type="submit" variant="contained" startIcon={<Save />} disabled={loading}>
                   {loading ? 'Publicando...' : 'Publicar Producto'}
                 </Button>
               </Box>

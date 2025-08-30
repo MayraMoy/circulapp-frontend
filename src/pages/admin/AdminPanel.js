@@ -14,7 +14,7 @@ import {
   ListItemText,
   Divider,
   Alert,
-  CircularProgress
+  CircularProgress,
 } from '@mui/material';
 import {
   Dashboard as DashboardIcon,
@@ -24,7 +24,7 @@ import {
   Settings as SettingsIcon,
   Analytics as AnalyticsIcon,
   Schedule as ScheduleIcon,
-  Category as MaterialsIcon
+  Category as MaterialsIcon,
 } from '@mui/icons-material';
 import { useAuth } from '../../context/AuthContext';
 import { adminService } from '../../services/api';
@@ -38,7 +38,7 @@ const AdminPanel = () => {
     totalUsers: 0,
     totalProducts: 0,
     totalTransactions: 0,
-    pendingReports: 0
+    pendingReports: 0,
   });
   const [loading, setLoading] = useState(true);
 
@@ -50,7 +50,7 @@ const AdminPanel = () => {
     { icon: AnalyticsIcon, text: 'Estadísticas', path: '/admin/analytics' },
     { icon: MaterialsIcon, text: 'Materiales', path: '/admin/materials' },
     { icon: ScheduleIcon, text: 'Horarios', path: '/admin/schedules' },
-    { icon: SettingsIcon, text: 'Configuración', path: '/admin/settings' }
+    { icon: SettingsIcon, text: 'Configuración', path: '/admin/settings' },
   ];
 
   useEffect(() => {
@@ -75,9 +75,7 @@ const AdminPanel = () => {
   if (!hasPermission('admin')) {
     return (
       <Container maxWidth="lg" sx={{ py: 4 }}>
-        <Alert severity="error">
-          No tienes permisos para acceder al panel administrativo
-        </Alert>
+        <Alert severity="error">No tienes permisos para acceder al panel administrativo</Alert>
       </Container>
     );
   }
@@ -87,7 +85,7 @@ const AdminPanel = () => {
       <Typography variant="h4" gutterBottom>
         Panel de Administración
       </Typography>
-      
+
       {loading ? (
         <Box sx={{ display: 'flex', justifyContent: 'center', py: 4 }}>
           <CircularProgress />
@@ -153,7 +151,8 @@ const AdminPanel = () => {
                   Acciones Rápidas
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
-                  Utiliza el menú lateral para navegar por las diferentes secciones del panel administrativo.
+                  Utiliza el menú lateral para navegar por las diferentes secciones del panel
+                  administrativo.
                 </Typography>
               </CardContent>
             </Card>
@@ -170,10 +169,10 @@ const AdminPanel = () => {
         <Grid item xs={12} md={3}>
           <Card>
             <List>
-              {menuItems.map((item) => {
+              {menuItems.map(item => {
                 const Icon = item.icon;
                 const isActive = location.pathname === item.path;
-                
+
                 return (
                   <React.Fragment key={item.path}>
                     <ListItem
@@ -183,8 +182,8 @@ const AdminPanel = () => {
                       sx={{
                         '&.Mui-selected': {
                           bgcolor: 'primary.light',
-                          color: 'primary.contrastText'
-                        }
+                          color: 'primary.contrastText',
+                        },
                       }}
                     >
                       <ListItemIcon>
@@ -225,51 +224,65 @@ const AdminPanel = () => {
 // Componentes placeholder para las diferentes secciones
 const AdminUsersPlaceholder = () => (
   <Box>
-    <Typography variant="h5" gutterBottom>Gestión de Usuarios</Typography>
+    <Typography variant="h5" gutterBottom>
+      Gestión de Usuarios
+    </Typography>
     <Alert severity="info">Esta sección está en desarrollo</Alert>
   </Box>
 );
 
 const AdminProductsPlaceholder = () => (
   <Box>
-    <Typography variant="h5" gutterBottom>Gestión de Productos</Typography>
+    <Typography variant="h5" gutterBottom>
+      Gestión de Productos
+    </Typography>
     <Alert severity="info">Esta sección está en desarrollo</Alert>
   </Box>
 );
 
 const AdminReportsPlaceholder = () => (
   <Box>
-    <Typography variant="h5" gutterBottom>Gestión de Reportes</Typography>
+    <Typography variant="h5" gutterBottom>
+      Gestión de Reportes
+    </Typography>
     <Alert severity="info">Esta sección está en desarrollo</Alert>
   </Box>
 );
 
 const AdminAnalyticsPlaceholder = () => (
   <Box>
-    <Typography variant="h5" gutterBottom>Estadísticas y Analytics</Typography>
+    <Typography variant="h5" gutterBottom>
+      Estadísticas y Analytics
+    </Typography>
     <Alert severity="info">Esta sección está en desarrollo</Alert>
   </Box>
 );
 
 const AdminMaterialsPlaceholder = () => (
   <Box>
-    <Typography variant="h5" gutterBottom>Gestión de Materiales</Typography>
+    <Typography variant="h5" gutterBottom>
+      Gestión de Materiales
+    </Typography>
     <Alert severity="info">Esta sección está en desarrollo</Alert>
   </Box>
 );
 
 const AdminSchedulesPlaceholder = () => (
   <Box>
-    <Typography variant="h5" gutterBottom>Horarios de Recolección</Typography>
+    <Typography variant="h5" gutterBottom>
+      Horarios de Recolección
+    </Typography>
     <Alert severity="info">Esta sección está en desarrollo</Alert>
   </Box>
 );
 
 const AdminSettingsPlaceholder = () => (
   <Box>
-    <Typography variant="h5" gutterBottom>Configuración del Sistema</Typography>
+    <Typography variant="h5" gutterBottom>
+      Configuración del Sistema
+    </Typography>
     <Alert severity="info">Esta sección está en desarrollo</Alert>
   </Box>
 );
 
-export default AdminPanel; 
+export default AdminPanel;

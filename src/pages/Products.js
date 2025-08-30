@@ -23,7 +23,7 @@ import {
   IconButton,
   Tooltip,
   Avatar,
-  Rating
+  Rating,
 } from '@mui/material';
 import {
   Search as SearchIcon,
@@ -33,7 +33,7 @@ import {
   FavoriteBorder,
   Visibility,
   CalendarToday,
-  Category as CategoryIcon
+  Category as CategoryIcon,
 } from '@mui/icons-material';
 import { productService } from '../services/api';
 import { useAuth } from '../context/AuthContext';
@@ -57,8 +57,16 @@ const Products = () => {
   const [location, setLocation] = useState(searchParams.get('location') || '');
 
   const categories = [
-    'Electrónicos', 'Muebles', 'Ropa', 'Libros', 'Deportes', 
-    'Juguetes', 'Hogar', 'Jardín', 'Herramientas', 'Otros'
+    'Electrónicos',
+    'Muebles',
+    'Ropa',
+    'Libros',
+    'Deportes',
+    'Juguetes',
+    'Hogar',
+    'Jardín',
+    'Herramientas',
+    'Otros',
   ];
 
   const conditions = ['Nuevo', 'Como nuevo', 'Muy bueno', 'Bueno', 'Regular'];
@@ -77,7 +85,7 @@ const Products = () => {
         category,
         condition,
         sort: sortBy,
-        location
+        location,
       };
 
       const response = await productService.getProducts(params);
@@ -91,7 +99,7 @@ const Products = () => {
     }
   };
 
-  const handleSearch = (e) => {
+  const handleSearch = e => {
     e.preventDefault();
     setCurrentPage(1);
     updateSearchParams();
@@ -107,7 +115,7 @@ const Products = () => {
     setSearchParams(params);
   };
 
-  const toggleFavorite = async (productId) => {
+  const toggleFavorite = async productId => {
     try {
       // Implementar lógica de favoritos
       console.log('Toggle favorite:', productId);
@@ -126,24 +134,23 @@ const Products = () => {
         onClick={() => navigate(`/products/${product._id}`)}
         sx={{ objectFit: 'cover' }}
       />
-      
+
       <CardContent sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 1 }}>
+        <Box
+          sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 1 }}
+        >
           <Typography variant="h6" component="h3" sx={{ flexGrow: 1, fontSize: '1.1rem' }}>
             {product.title}
           </Typography>
           <Tooltip title={product.isFavorite ? 'Quitar de favoritos' : 'Agregar a favoritos'}>
-            <IconButton 
-              size="small" 
-              onClick={(e) => {
+            <IconButton
+              size="small"
+              onClick={e => {
                 e.stopPropagation();
                 toggleFavorite(product._id);
               }}
             >
-              {product.isFavorite ? 
-                <Favorite color="error" /> : 
-                <FavoriteBorder />
-              }
+              {product.isFavorite ? <Favorite color="error" /> : <FavoriteBorder />}
             </IconButton>
           </Tooltip>
         </Box>
@@ -154,33 +161,36 @@ const Products = () => {
 
         <Box sx={{ display: 'flex', gap: 1, mb: 2, flexWrap: 'wrap' }}>
           <Chip label={product.category} size="small" variant="outlined" />
-          <Chip 
-            label={product.condition} 
-            size="small" 
+          <Chip
+            label={product.condition}
+            size="small"
             color={product.condition === 'Nuevo' ? 'success' : 'default'}
           />
         </Box>
 
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
-          <Avatar sx={{ width: 24, height: 24 }}>
-            {product.owner?.name?.charAt(0)}
-          </Avatar>
+          <Avatar sx={{ width: 24, height: 24 }}>{product.owner?.name?.charAt(0)}</Avatar>
           <Typography variant="caption" color="text.secondary">
             {product.owner?.name}
           </Typography>
-          {product.owner?.rating && (
-            <Rating value={product.owner.rating} size="small" readOnly />
-          )}
+          {product.owner?.rating && <Rating value={product.owner.rating} size="small" readOnly />}
         </Box>
 
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mt: 'auto' }}>
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            mt: 'auto',
+          }}
+        >
           <Box sx={{ display: 'flex', align: 'center', gap: 1 }}>
             <LocationOn sx={{ fontSize: 16, color: 'text.secondary' }} />
             <Typography variant="caption" color="text.secondary">
               {product.location?.city}
             </Typography>
           </Box>
-          
+
           <Box sx={{ display: 'flex', align: 'center', gap: 1 }}>
             <Visibility sx={{ fontSize: 16, color: 'text.secondary' }} />
             <Typography variant="caption" color="text.secondary">
@@ -189,9 +199,9 @@ const Products = () => {
           </Box>
         </Box>
 
-        <Button 
-          variant="contained" 
-          fullWidth 
+        <Button
+          variant="contained"
+          fullWidth
           sx={{ mt: 2 }}
           onClick={() => navigate(`/products/${product._id}`)}
         >
@@ -208,33 +218,35 @@ const Products = () => {
         <Typography variant="h4" gutterBottom>
           Explorar Productos
         </Typography>
-        
+
         <form onSubmit={handleSearch}>
           <Box sx={{ display: 'flex', gap: 2, mb: 2, flexWrap: 'wrap' }}>
             <TextField
               placeholder="Buscar productos..."
               value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
+              onChange={e => setSearchQuery(e.target.value)}
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
                     <SearchIcon />
                   </InputAdornment>
-                )
+                ),
               }}
               sx={{ flexGrow: 1, minWidth: 250 }}
             />
-            
+
             <FormControl sx={{ minWidth: 150 }}>
               <InputLabel>Categoría</InputLabel>
               <Select
                 value={category}
                 label="Categoría"
-                onChange={(e) => setCategory(e.target.value)}
+                onChange={e => setCategory(e.target.value)}
               >
                 <MenuItem value="">Todas</MenuItem>
                 {categories.map(cat => (
-                  <MenuItem key={cat} value={cat}>{cat}</MenuItem>
+                  <MenuItem key={cat} value={cat}>
+                    {cat}
+                  </MenuItem>
                 ))}
               </Select>
             </FormControl>
@@ -244,22 +256,20 @@ const Products = () => {
               <Select
                 value={condition}
                 label="Condición"
-                onChange={(e) => setCondition(e.target.value)}
+                onChange={e => setCondition(e.target.value)}
               >
                 <MenuItem value="">Todas</MenuItem>
                 {conditions.map(cond => (
-                  <MenuItem key={cond} value={cond}>{cond}</MenuItem>
+                  <MenuItem key={cond} value={cond}>
+                    {cond}
+                  </MenuItem>
                 ))}
               </Select>
             </FormControl>
 
             <FormControl sx={{ minWidth: 150 }}>
               <InputLabel>Ordenar</InputLabel>
-              <Select
-                value={sortBy}
-                label="Ordenar"
-                onChange={(e) => setSortBy(e.target.value)}
-              >
+              <Select value={sortBy} label="Ordenar" onChange={e => setSortBy(e.target.value)}>
                 <MenuItem value="newest">Más recientes</MenuItem>
                 <MenuItem value="oldest">Más antiguos</MenuItem>
                 <MenuItem value="views">Más vistos</MenuItem>
@@ -300,7 +310,7 @@ const Products = () => {
       ) : products.length > 0 ? (
         <>
           <Grid container spacing={3}>
-            {products.map((product) => (
+            {products.map(product => (
               <Grid item xs={12} sm={6} md={4} lg={3} key={product._id}>
                 <ProductCard product={product} />
               </Grid>
@@ -322,14 +332,17 @@ const Products = () => {
       ) : (
         <Alert severity="info">
           No se encontraron productos que coincidan con tu búsqueda.
-          <Button onClick={() => {
-            setSearchQuery('');
-            setCategory('');
-            setCondition('');
-            setSortBy('newest');
-            setLocation('');
-            setCurrentPage(1);
-          }} sx={{ ml: 2 }}>
+          <Button
+            onClick={() => {
+              setSearchQuery('');
+              setCategory('');
+              setCondition('');
+              setSortBy('newest');
+              setLocation('');
+              setCurrentPage(1);
+            }}
+            sx={{ ml: 2 }}
+          >
             Limpiar filtros
           </Button>
         </Alert>

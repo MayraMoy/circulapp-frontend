@@ -1,6 +1,6 @@
 // pages/auth/Register.js
-import React, { useState, useEffect } from "react";
-import { Link as RouterLink, useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from 'react';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import {
   Container,
   Box,
@@ -22,7 +22,7 @@ import {
   Select,
   MenuItem,
   FormHelperText,
-} from "@mui/material";
+} from '@mui/material';
 import {
   Person as PersonIcon,
   Email as EmailIcon,
@@ -33,20 +33,22 @@ import {
   VisibilityOff,
   ArrowBack,
   ArrowForward,
-} from "@mui/icons-material";
-import { useAuth } from "../../context/AuthContext";
+} from '@mui/icons-material';
+import { useAuth } from '../../context/AuthContext';
 
 // Componente para el icono emoji
 const EcoIcon = () => (
-  <span style={{ 
-    fontSize: '24px', 
-    lineHeight: 1
-  }}>
+  <span
+    style={{
+      fontSize: '24px',
+      lineHeight: 1,
+    }}
+  >
     🌱
   </span>
 );
 
-const steps = ["Información Personal", "Ubicación", "Confirmación"];
+const steps = ['Información Personal', 'Ubicación', 'Confirmación'];
 
 const Register = () => {
   const navigate = useNavigate();
@@ -57,16 +59,16 @@ const Register = () => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
-    phone: "",
-    userType: "individual",
+    name: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+    phone: '',
+    userType: 'individual',
     location: {
-      address: "",
-      city: "",
-      province: "",
+      address: '',
+      city: '',
+      province: '',
       coordinates: { lat: null, lng: null },
     },
   });
@@ -76,36 +78,36 @@ const Register = () => {
   // ✅ Validaciones básicas
   const validateField = (name, value) => {
     switch (name) {
-      case "email":
-        return /\S+@\S+\.\S+/.test(value) ? "" : "Correo inválido";
-      case "password":
-        return value.length < 6 ? "Mínimo 6 caracteres" : "";
-      case "confirmPassword":
-        return value !== formData.password ? "Las contraseñas no coinciden" : "";
-      case "phone":
-        return /^\d{8,15}$/.test(value) ? "" : "Teléfono inválido";
-      case "name":
-        return value.trim() === "" ? "El nombre es requerido" : "";
+      case 'email':
+        return /\S+@\S+\.\S+/.test(value) ? '' : 'Correo inválido';
+      case 'password':
+        return value.length < 6 ? 'Mínimo 6 caracteres' : '';
+      case 'confirmPassword':
+        return value !== formData.password ? 'Las contraseñas no coinciden' : '';
+      case 'phone':
+        return /^\d{8,15}$/.test(value) ? '' : 'Teléfono inválido';
+      case 'name':
+        return value.trim() === '' ? 'El nombre es requerido' : '';
       default:
-        return "";
+        return '';
     }
   };
 
-  const handleChange = (e) => {
+  const handleChange = e => {
     const { name, value } = e.target;
 
-    if (name.startsWith("location.")) {
-      const field = name.split(".")[1];
-      setFormData((prev) => ({
+    if (name.startsWith('location.')) {
+      const field = name.split('.')[1];
+      setFormData(prev => ({
         ...prev,
         location: { ...prev.location, [field]: value },
       }));
     } else {
-      setFormData((prev) => ({ ...prev, [name]: value }));
+      setFormData(prev => ({ ...prev, [name]: value }));
     }
 
     // Validación en tiempo real
-    setFormErrors((prev) => ({
+    setFormErrors(prev => ({
       ...prev,
       [name]: validateField(name, value),
     }));
@@ -115,38 +117,38 @@ const Register = () => {
     if (activeStep === steps.length - 1) {
       handleSubmit();
     } else {
-      setActiveStep((prev) => prev + 1);
+      setActiveStep(prev => prev + 1);
     }
   };
 
-  const handleBack = () => setActiveStep((prev) => prev - 1);
+  const handleBack = () => setActiveStep(prev => prev - 1);
 
   const handleSubmit = async () => {
     const { name, email, password, confirmPassword, phone } = formData;
 
     // Validación final antes de enviar
     const errors = {
-      name: validateField("name", name),
-      email: validateField("email", email),
-      password: validateField("password", password),
-      confirmPassword: validateField("confirmPassword", confirmPassword),
-      phone: validateField("phone", phone),
+      name: validateField('name', name),
+      email: validateField('email', email),
+      password: validateField('password', password),
+      confirmPassword: validateField('confirmPassword', confirmPassword),
+      phone: validateField('phone', phone),
     };
 
     setFormErrors(errors);
 
-    if (Object.values(errors).some((err) => err)) return;
+    if (Object.values(errors).some(err => err)) return;
 
     try {
       await register(formData);
-      navigate("/dashboard");
+      navigate('/dashboard');
     } catch (err) {
       console.error(err);
     }
   };
 
   // ✅ Renderizado de pasos
-  const renderStepContent = (step) => {
+  const renderStepContent = step => {
     switch (step) {
       case 0:
         return (
@@ -192,7 +194,7 @@ const Register = () => {
                 fullWidth
                 label="Contraseña"
                 name="password"
-                type={showPassword ? "text" : "password"}
+                type={showPassword ? 'text' : 'password'}
                 value={formData.password}
                 onChange={handleChange}
                 error={!!formErrors.password}
@@ -218,7 +220,7 @@ const Register = () => {
                 fullWidth
                 label="Confirmar contraseña"
                 name="confirmPassword"
-                type={showConfirmPassword ? "text" : "password"}
+                type={showConfirmPassword ? 'text' : 'password'}
                 value={formData.confirmPassword}
                 onChange={handleChange}
                 error={!!formErrors.confirmPassword}
@@ -231,11 +233,7 @@ const Register = () => {
                   ),
                   endAdornment: (
                     <InputAdornment position="end">
-                      <IconButton
-                        onClick={() =>
-                          setShowConfirmPassword(!showConfirmPassword)
-                        }
-                      >
+                      <IconButton onClick={() => setShowConfirmPassword(!showConfirmPassword)}>
                         {showConfirmPassword ? <VisibilityOff /> : <Visibility />}
                       </IconButton>
                     </InputAdornment>
@@ -338,7 +336,7 @@ const Register = () => {
         )}
 
         <Stepper activeStep={activeStep} sx={{ mb: 3 }}>
-          {steps.map((label) => (
+          {steps.map(label => (
             <Step key={label}>
               <StepLabel>{label}</StepLabel>
             </Step>
@@ -349,36 +347,30 @@ const Register = () => {
 
         <Box display="flex" justifyContent="space-between" mt={3}>
           {activeStep > 0 && (
-            <Button
-              startIcon={<ArrowBack />}
-              variant="outlined"
-              onClick={handleBack}
-            >
+            <Button startIcon={<ArrowBack />} variant="outlined" onClick={handleBack}>
               Atrás
             </Button>
           )}
 
           <Button
             variant="contained"
-            endIcon={
-              activeStep === steps.length - 1 ? null : <ArrowForward />
-            }
+            endIcon={activeStep === steps.length - 1 ? null : <ArrowForward />}
             onClick={handleNext}
             disabled={loading}
           >
             {loading ? (
               <CircularProgress size={24} color="inherit" />
             ) : activeStep === steps.length - 1 ? (
-              "Confirmar"
+              'Confirmar'
             ) : (
-              "Siguiente"
+              'Siguiente'
             )}
           </Button>
         </Box>
 
         <Box mt={2} textAlign="center">
           <Typography variant="body2">
-            ¿Ya tienes cuenta?{" "}
+            ¿Ya tienes cuenta?{' '}
             <Link component={RouterLink} to="/login">
               Inicia sesión
             </Link>

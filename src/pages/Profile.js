@@ -29,7 +29,7 @@ import {
   Dialog,
   DialogTitle,
   DialogContent,
-  DialogActions
+  DialogActions,
 } from '@mui/material';
 import {
   Edit as EditIcon,
@@ -45,7 +45,7 @@ import {
   Help,
   PhotoCamera,
   Save,
-  Cancel
+  Cancel,
 } from '@mui/icons-material';
 import { useAuth } from '../context/AuthContext';
 import { userService, productService, reviewService } from '../services/api';
@@ -69,15 +69,15 @@ const Profile = () => {
     location: {
       address: user?.location?.address || '',
       city: user?.location?.city || '',
-      province: user?.location?.province || ''
-    }
+      province: user?.location?.province || '',
+    },
   });
 
   const [userStats, setUserStats] = useState({
     productsOffered: 0,
     transactionsCompleted: 0,
     rating: 0,
-    reviewCount: 0
+    reviewCount: 0,
   });
 
   const [userProducts, setUserProducts] = useState([]);
@@ -87,7 +87,7 @@ const Profile = () => {
     push: true,
     chat: true,
     transactions: true,
-    marketing: false
+    marketing: false,
   });
 
   useEffect(() => {
@@ -97,7 +97,7 @@ const Profile = () => {
   const loadUserData = async () => {
     try {
       setLoading(true);
-      
+
       // Cargar estadísticas
       const statsResponse = await userService.getUserStats();
       setUserStats(statsResponse.data);
@@ -113,7 +113,6 @@ const Profile = () => {
       // Cargar configuración de notificaciones
       const notificationsResponse = await userService.getNotificationSettings();
       setNotificationSettings(notificationsResponse.data);
-
     } catch (err) {
       console.error('Error loading user data:', err);
     } finally {
@@ -136,7 +135,7 @@ const Profile = () => {
     }
   };
 
-  const handleAvatarUpload = async (event) => {
+  const handleAvatarUpload = async event => {
     const file = event.target.files[0];
     if (!file) return;
 
@@ -144,7 +143,7 @@ const Profile = () => {
       setLoading(true);
       const formData = new FormData();
       formData.append('avatar', file);
-      
+
       const response = await userService.uploadAvatar(formData);
       updateUser({ avatar: response.data.avatar });
       setAvatarDialogOpen(false);
@@ -168,9 +167,7 @@ const Profile = () => {
   };
 
   const TabPanel = ({ children, value, index }) => (
-    <div hidden={value !== index}>
-      {value === index && <Box sx={{ py: 3 }}>{children}</Box>}
-    </div>
+    <div hidden={value !== index}>{value === index && <Box sx={{ py: 3 }}>{children}</Box>}</div>
   );
 
   return (
@@ -181,20 +178,17 @@ const Profile = () => {
           <Card>
             <CardContent sx={{ textAlign: 'center' }}>
               <Box sx={{ position: 'relative', display: 'inline-block', mb: 2 }}>
-                <Avatar
-                  src={user?.avatar}
-                  sx={{ width: 120, height: 120, mx: 'auto', mb: 2 }}
-                >
+                <Avatar src={user?.avatar} sx={{ width: 120, height: 120, mx: 'auto', mb: 2 }}>
                   {user?.name?.charAt(0)?.toUpperCase()}
                 </Avatar>
                 <IconButton
-                  sx={{ 
-                    position: 'absolute', 
-                    bottom: 8, 
-                    right: -8, 
+                  sx={{
+                    position: 'absolute',
+                    bottom: 8,
+                    right: -8,
                     bgcolor: 'primary.main',
                     color: 'white',
-                    '&:hover': { bgcolor: 'primary.dark' }
+                    '&:hover': { bgcolor: 'primary.dark' },
                   }}
                   onClick={() => setAvatarDialogOpen(true)}
                 >
@@ -204,9 +198,7 @@ const Profile = () => {
 
               <Typography variant="h5" gutterBottom>
                 {user?.name}
-                {user?.verified && (
-                  <Verified sx={{ ml: 1, color: 'primary.main' }} />
-                )}
+                {user?.verified && <Verified sx={{ ml: 1, color: 'primary.main' }} />}
               </Typography>
 
               <Typography variant="body2" color="text.secondary" paragraph>
@@ -254,7 +246,7 @@ const Profile = () => {
                 </Box>
               </Box>
 
-              <Chip 
+              <Chip
                 label={user?.userType === 'comuna' ? 'Comuna' : 'Usuario Individual'}
                 color="primary"
                 variant="outlined"
@@ -283,7 +275,14 @@ const Profile = () => {
           <TabPanel value={activeTab} index="profile">
             <Card>
               <CardContent>
-                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
+                <Box
+                  sx={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    mb: 3,
+                  }}
+                >
                   <Typography variant="h6">Información Personal</Typography>
                   <Button
                     startIcon={editMode ? <Cancel /> : <EditIcon />}
@@ -297,8 +296,8 @@ const Profile = () => {
                           location: {
                             address: user?.location?.address || '',
                             city: user?.location?.city || '',
-                            province: user?.location?.province || ''
-                          }
+                            province: user?.location?.province || '',
+                          },
                         });
                       }
                       setEditMode(!editMode);
@@ -314,7 +313,7 @@ const Profile = () => {
                       fullWidth
                       label="Nombre"
                       value={profileData.name}
-                      onChange={(e) => setProfileData(prev => ({ ...prev, name: e.target.value }))}
+                      onChange={e => setProfileData(prev => ({ ...prev, name: e.target.value }))}
                       disabled={!editMode}
                     />
                   </Grid>
@@ -323,7 +322,7 @@ const Profile = () => {
                       fullWidth
                       label="Email"
                       value={profileData.email}
-                      onChange={(e) => setProfileData(prev => ({ ...prev, email: e.target.value }))}
+                      onChange={e => setProfileData(prev => ({ ...prev, email: e.target.value }))}
                       disabled={!editMode}
                     />
                   </Grid>
@@ -332,7 +331,7 @@ const Profile = () => {
                       fullWidth
                       label="Teléfono"
                       value={profileData.phone}
-                      onChange={(e) => setProfileData(prev => ({ ...prev, phone: e.target.value }))}
+                      onChange={e => setProfileData(prev => ({ ...prev, phone: e.target.value }))}
                       disabled={!editMode}
                     />
                   </Grid>
@@ -343,7 +342,7 @@ const Profile = () => {
                       rows={3}
                       label="Biografía"
                       value={profileData.bio}
-                      onChange={(e) => setProfileData(prev => ({ ...prev, bio: e.target.value }))}
+                      onChange={e => setProfileData(prev => ({ ...prev, bio: e.target.value }))}
                       disabled={!editMode}
                       placeholder="Cuéntanos sobre ti..."
                     />
@@ -358,10 +357,12 @@ const Profile = () => {
                       fullWidth
                       label="Dirección"
                       value={profileData.location.address}
-                      onChange={(e) => setProfileData(prev => ({
-                        ...prev,
-                        location: { ...prev.location, address: e.target.value }
-                      }))}
+                      onChange={e =>
+                        setProfileData(prev => ({
+                          ...prev,
+                          location: { ...prev.location, address: e.target.value },
+                        }))
+                      }
                       disabled={!editMode}
                     />
                   </Grid>
@@ -370,10 +371,12 @@ const Profile = () => {
                       fullWidth
                       label="Ciudad"
                       value={profileData.location.city}
-                      onChange={(e) => setProfileData(prev => ({
-                        ...prev,
-                        location: { ...prev.location, city: e.target.value }
-                      }))}
+                      onChange={e =>
+                        setProfileData(prev => ({
+                          ...prev,
+                          location: { ...prev.location, city: e.target.value },
+                        }))
+                      }
                       disabled={!editMode}
                     />
                   </Grid>
@@ -382,10 +385,12 @@ const Profile = () => {
                       fullWidth
                       label="Provincia"
                       value={profileData.location.province}
-                      onChange={(e) => setProfileData(prev => ({
-                        ...prev,
-                        location: { ...prev.location, province: e.target.value }
-                      }))}
+                      onChange={e =>
+                        setProfileData(prev => ({
+                          ...prev,
+                          location: { ...prev.location, province: e.target.value },
+                        }))
+                      }
                       disabled={!editMode}
                     />
                   </Grid>
@@ -409,30 +414,34 @@ const Profile = () => {
 
           {/* Tab: Mis Productos */}
           <TabPanel value={activeTab} index="products">
-            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
+            <Box
+              sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}
+            >
               <Typography variant="h6">Mis Productos ({userProducts.length})</Typography>
-              <Button
-                variant="contained"
-                onClick={() => navigate('/create-product')}
-              >
+              <Button variant="contained" onClick={() => navigate('/create-product')}>
                 Nuevo Producto
               </Button>
             </Box>
 
             {userProducts.length > 0 ? (
               <Grid container spacing={2}>
-                {userProducts.map((product) => (
+                {userProducts.map(product => (
                   <Grid item xs={12} sm={6} key={product._id}>
-                    <Card sx={{ cursor: 'pointer' }} onClick={() => navigate(`/products/${product._id}`)}>
+                    <Card
+                      sx={{ cursor: 'pointer' }}
+                      onClick={() => navigate(`/products/${product._id}`)}
+                    >
                       <Box sx={{ display: 'flex' }}>
                         <Box
                           sx={{
                             width: 100,
                             height: 100,
                             bgcolor: 'grey.200',
-                            backgroundImage: product.images?.[0] ? `url(${product.images[0].url})` : 'none',
+                            backgroundImage: product.images?.[0]
+                              ? `url(${product.images[0].url})`
+                              : 'none',
                             backgroundSize: 'cover',
-                            backgroundPosition: 'center'
+                            backgroundPosition: 'center',
                           }}
                         />
                         <CardContent sx={{ flex: 1 }}>
@@ -443,8 +452,10 @@ const Profile = () => {
                             {product.description?.substring(0, 60)}...
                           </Typography>
                           <Box sx={{ display: 'flex', gap: 1 }}>
-                            <Chip 
-                              label={product.status === 'available' ? 'Disponible' : 'No disponible'}
+                            <Chip
+                              label={
+                                product.status === 'available' ? 'Disponible' : 'No disponible'
+                              }
                               size="small"
                               color={product.status === 'available' ? 'success' : 'default'}
                             />
@@ -485,9 +496,7 @@ const Profile = () => {
                       <ListItemText
                         primary={
                           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                            <Typography variant="subtitle2">
-                              {review.reviewer?.name}
-                            </Typography>
+                            <Typography variant="subtitle2">{review.reviewer?.name}</Typography>
                             <Rating value={review.rating} size="small" readOnly />
                           </Box>
                         }
@@ -508,9 +517,7 @@ const Profile = () => {
                 ))}
               </List>
             ) : (
-              <Alert severity="info">
-                Aún no tienes reseñas.
-              </Alert>
+              <Alert severity="info">Aún no tienes reseñas.</Alert>
             )}
           </TabPanel>
 
@@ -521,13 +528,13 @@ const Profile = () => {
                 <Typography variant="h6" gutterBottom>
                   Configuración de Notificaciones
                 </Typography>
-                
+
                 <Box sx={{ mb: 3 }}>
                   <FormControlLabel
                     control={
                       <Switch
                         checked={notificationSettings.email}
-                        onChange={(e) => handleNotificationChange('email', e.target.checked)}
+                        onChange={e => handleNotificationChange('email', e.target.checked)}
                       />
                     }
                     label="Notificaciones por email"
@@ -542,7 +549,7 @@ const Profile = () => {
                     control={
                       <Switch
                         checked={notificationSettings.push}
-                        onChange={(e) => handleNotificationChange('push', e.target.checked)}
+                        onChange={e => handleNotificationChange('push', e.target.checked)}
                       />
                     }
                     label="Notificaciones push"
@@ -557,7 +564,7 @@ const Profile = () => {
                     control={
                       <Switch
                         checked={notificationSettings.chat}
-                        onChange={(e) => handleNotificationChange('chat', e.target.checked)}
+                        onChange={e => handleNotificationChange('chat', e.target.checked)}
                       />
                     }
                     label="Mensajes de chat"
@@ -572,7 +579,7 @@ const Profile = () => {
                     control={
                       <Switch
                         checked={notificationSettings.transactions}
-                        onChange={(e) => handleNotificationChange('transactions', e.target.checked)}
+                        onChange={e => handleNotificationChange('transactions', e.target.checked)}
                       />
                     }
                     label="Transacciones"
@@ -587,7 +594,7 @@ const Profile = () => {
                     control={
                       <Switch
                         checked={notificationSettings.marketing}
-                        onChange={(e) => handleNotificationChange('marketing', e.target.checked)}
+                        onChange={e => handleNotificationChange('marketing', e.target.checked)}
                       />
                     }
                     label="Noticias y promociones"
@@ -607,15 +614,11 @@ const Profile = () => {
                   >
                     Cambiar Contraseña
                   </Button>
-                  
-                  <Button
-                    variant="outlined"
-                    startIcon={<Help />}
-                    onClick={() => navigate('/help')}
-                  >
+
+                  <Button variant="outlined" startIcon={<Help />} onClick={() => navigate('/help')}>
                     Centro de Ayuda
                   </Button>
-                  
+
                   <Button
                     variant="outlined"
                     color="error"

@@ -18,14 +18,9 @@ import {
   Divider,
   Alert,
   Paper,
-  Chip
+  Chip,
 } from '@mui/material';
-import {
-  Send,
-  AttachFile,
-  Search,
-  ArrowBack
-} from '@mui/icons-material';
+import { Send, AttachFile, Search, ArrowBack } from '@mui/icons-material';
 import { useAuth } from '../context/AuthContext';
 import { chatService } from '../services/api';
 
@@ -66,7 +61,7 @@ const Chat = () => {
     }
   };
 
-  const loadChat = async (id) => {
+  const loadChat = async id => {
     try {
       const chatResponse = await chatService.getChat(id);
       setActiveChat(chatResponse.data);
@@ -110,20 +105,18 @@ const Chat = () => {
           navigate(`/chat/${chat._id}`);
           loadChat(chat._id);
         }}
-        sx={{ 
+        sx={{
           borderRadius: 2,
           mb: 1,
           '&.Mui-selected': {
             bgcolor: 'primary.light',
-            color: 'primary.contrastText'
-          }
+            color: 'primary.contrastText',
+          },
         }}
       >
         <ListItemAvatar>
           <Badge badgeContent={chat.unreadCount} color="error">
-            <Avatar src={otherParticipant?.avatar}>
-              {otherParticipant?.name?.charAt(0)}
-            </Avatar>
+            <Avatar src={otherParticipant?.avatar}>{otherParticipant?.name?.charAt(0)}</Avatar>
           </Badge>
         </ListItemAvatar>
         <ListItemText
@@ -147,13 +140,13 @@ const Chat = () => {
 
   const MessageBubble = ({ message }) => {
     const isOwn = message.sender._id === user._id;
-    
+
     return (
       <Box
         sx={{
           display: 'flex',
           justifyContent: isOwn ? 'flex-end' : 'flex-start',
-          mb: 1
+          mb: 1,
         }}
       >
         <Paper
@@ -161,19 +154,17 @@ const Chat = () => {
             p: 2,
             maxWidth: '70%',
             bgcolor: isOwn ? 'primary.main' : 'grey.100',
-            color: isOwn ? 'primary.contrastText' : 'text.primary'
+            color: isOwn ? 'primary.contrastText' : 'text.primary',
           }}
         >
-          <Typography variant="body2">
-            {message.content}
-          </Typography>
-          <Typography 
-            variant="caption" 
-            sx={{ 
-              display: 'block', 
-              mt: 0.5, 
+          <Typography variant="body2">{message.content}</Typography>
+          <Typography
+            variant="caption"
+            sx={{
+              display: 'block',
+              mt: 0.5,
               opacity: 0.7,
-              textAlign: 'right'
+              textAlign: 'right',
             }}
           >
             {new Date(message.createdAt).toLocaleTimeString()}
@@ -206,11 +197,11 @@ const Chat = () => {
                 placeholder="Buscar conversaciones..."
                 size="small"
                 InputProps={{
-                  startAdornment: <Search sx={{ mr: 1 }} />
+                  startAdornment: <Search sx={{ mr: 1 }} />,
                 }}
               />
             </Box>
-            
+
             <Box sx={{ flexGrow: 1, overflow: 'auto' }}>
               {chats.length > 0 ? (
                 <List sx={{ p: 1 }}>
@@ -220,9 +211,7 @@ const Chat = () => {
                 </List>
               ) : (
                 <Box sx={{ p: 3, textAlign: 'center' }}>
-                  <Typography color="text.secondary">
-                    No tienes conversaciones aún
-                  </Typography>
+                  <Typography color="text.secondary">No tienes conversaciones aún</Typography>
                 </Box>
               )}
             </Box>
@@ -237,13 +226,13 @@ const Chat = () => {
                 {/* Header del chat */}
                 <Box sx={{ p: 2, borderBottom: 1, borderColor: 'divider' }}>
                   <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                    <IconButton 
+                    <IconButton
                       sx={{ display: { md: 'none' }, mr: 1 }}
                       onClick={() => navigate('/chat')}
                     >
                       <ArrowBack />
                     </IconButton>
-                    <Avatar 
+                    <Avatar
                       src={activeChat.participants.find(p => p._id !== user._id)?.avatar}
                       sx={{ mr: 2 }}
                     >
@@ -253,7 +242,7 @@ const Chat = () => {
                       <Typography variant="h6">
                         {activeChat.participants.find(p => p._id !== user._id)?.name}
                       </Typography>
-                      <Chip 
+                      <Chip
                         label={`Sobre: ${activeChat.product.title}`}
                         size="small"
                         variant="outlined"
@@ -278,8 +267,8 @@ const Chat = () => {
                       fullWidth
                       placeholder="Escribe un mensaje..."
                       value={newMessage}
-                      onChange={(e) => setNewMessage(e.target.value)}
-                      onKeyPress={(e) => {
+                      onChange={e => setNewMessage(e.target.value)}
+                      onKeyPress={e => {
                         if (e.key === 'Enter' && !e.shiftKey) {
                           e.preventDefault();
                           sendMessage();
@@ -292,24 +281,22 @@ const Chat = () => {
                     <IconButton color="primary">
                       <AttachFile />
                     </IconButton>
-                    <IconButton 
-                      color="primary" 
-                      onClick={sendMessage}
-                      disabled={!newMessage.trim()}
-                    >
+                    <IconButton color="primary" onClick={sendMessage} disabled={!newMessage.trim()}>
                       <Send />
                     </IconButton>
                   </Box>
                 </Box>
               </>
             ) : (
-              <Box sx={{ 
-                display: 'flex', 
-                alignItems: 'center', 
-                justifyContent: 'center',
-                height: '100%',
-                textAlign: 'center'
-              }}>
+              <Box
+                sx={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  height: '100%',
+                  textAlign: 'center',
+                }}
+              >
                 <Box>
                   <Typography variant="h6" color="text.secondary" gutterBottom>
                     Selecciona una conversación

@@ -12,24 +12,26 @@ import {
   Alert,
   CircularProgress,
   InputAdornment,
-  IconButton
+  IconButton,
 } from '@mui/material';
 import {
   Email as EmailIcon,
   Lock as LockIcon,
   Visibility,
-  VisibilityOff
+  VisibilityOff,
 } from '@mui/icons-material';
 import { useAuth } from '../../context/AuthContext';
 
 // Componente para el icono emoji
 const EcoIcon = ({ sx }) => (
-  <span style={{ 
-    fontSize: '48px', 
-    lineHeight: 1,
-    color: '#2E7D32',
-    marginRight: '16px'
-  }}>
+  <span
+    style={{
+      fontSize: '48px',
+      lineHeight: 1,
+      color: '#2E7D32',
+      marginRight: '16px',
+    }}
+  >
     🌱
   </span>
 );
@@ -37,30 +39,30 @@ const EcoIcon = ({ sx }) => (
 const Login = () => {
   const navigate = useNavigate();
   const { login, loading, error, clearError } = useAuth();
-  
+
   const [formData, setFormData] = useState({
     email: '',
-    password: ''
+    password: '',
   });
-  
+
   const [showPassword, setShowPassword] = useState(false);
   const [formErrors, setFormErrors] = useState({});
 
-  const handleChange = (e) => {
+  const handleChange = e => {
     const { name, value } = e.target;
     setFormData(prev => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
 
     // Limpiar errores cuando el usuario empiece a escribir
     if (formErrors[name]) {
       setFormErrors(prev => ({
         ...prev,
-        [name]: ''
+        [name]: '',
       }));
     }
-    
+
     if (error) {
       clearError();
     }
@@ -68,23 +70,23 @@ const Login = () => {
 
   const validateForm = () => {
     const errors = {};
-    
+
     if (!formData.email) {
       errors.email = 'El email es requerido';
     } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
       errors.email = 'El email no es válido';
     }
-    
+
     if (!formData.password) {
       errors.password = 'La contraseña es requerida';
     }
-    
+
     return errors;
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async e => {
     e.preventDefault();
-    
+
     const errors = validateForm();
     if (Object.keys(errors).length > 0) {
       setFormErrors(errors);
@@ -92,7 +94,7 @@ const Login = () => {
     }
 
     const result = await login(formData);
-    
+
     if (result.success) {
       navigate('/dashboard');
     }
@@ -117,7 +119,7 @@ const Login = () => {
           <Typography variant="h4" component="h2" align="center" gutterBottom>
             Iniciar Sesión
           </Typography>
-          
+
           <Typography variant="body1" align="center" color="text.secondary" sx={{ mb: 3 }}>
             Conecta con tu comunidad y contribuye a la economía circular
           </Typography>
@@ -186,41 +188,27 @@ const Login = () => {
               variant="contained"
               size="large"
               disabled={loading}
-              sx={{ 
+              sx={{
                 mb: 2,
                 height: 48,
-                fontSize: '1.1rem'
+                fontSize: '1.1rem',
               }}
             >
-              {loading ? (
-                <CircularProgress size={24} color="inherit" />
-              ) : (
-                'Iniciar Sesión'
-              )}
+              {loading ? <CircularProgress size={24} color="inherit" /> : 'Iniciar Sesión'}
             </Button>
           </form>
 
           <Box sx={{ textAlign: 'center', mt: 2 }}>
             <Typography variant="body2" color="text.secondary">
               ¿No tienes una cuenta?{' '}
-              <Link 
-                component={RouterLink} 
-                to="/register" 
-                color="primary"
-                sx={{ fontWeight: 600 }}
-              >
+              <Link component={RouterLink} to="/register" color="primary" sx={{ fontWeight: 600 }}>
                 Regístrate aquí
               </Link>
             </Typography>
           </Box>
 
           <Box sx={{ textAlign: 'center', mt: 2 }}>
-            <Link 
-              href="#" 
-              color="primary" 
-              variant="body2"
-              sx={{ fontWeight: 500 }}
-            >
+            <Link href="#" color="primary" variant="body2" sx={{ fontWeight: 500 }}>
               ¿Olvidaste tu contraseña?
             </Link>
           </Box>
@@ -229,9 +217,9 @@ const Login = () => {
         {/* Información adicional */}
         <Box sx={{ mt: 4, textAlign: 'center', maxWidth: 500 }}>
           <Typography variant="body2" color="text.secondary">
-            CirculApp es una plataforma que conecta a personas que quieren dar una segunda vida 
-            a sus objetos con quienes pueden aprovecharlos, promoviendo la economía circular 
-            y el cuidado del medio ambiente.
+            CirculApp es una plataforma que conecta a personas que quieren dar una segunda vida a
+            sus objetos con quienes pueden aprovecharlos, promoviendo la economía circular y el
+            cuidado del medio ambiente.
           </Typography>
         </Box>
       </Box>

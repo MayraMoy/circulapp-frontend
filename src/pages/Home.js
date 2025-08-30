@@ -13,19 +13,19 @@ import {
   Chip,
   AppBar,
   Toolbar,
-  Paper
+  // Paper removido - no se usa
 } from '@mui/material';
-import {
-  ArrowForward
-} from '@mui/icons-material';
+import { ArrowForward } from '@mui/icons-material';
 
 // Componentes para iconos emoji - Simple y sin problemas
 const EcoIcon = ({ fontSize }) => (
-  <span style={{ 
-    fontSize: fontSize === 32 ? '32px' : fontSize === 80 ? '80px' : '24px',
-    lineHeight: 1,
-    marginRight: fontSize === 32 ? '8px' : '0'
-  }}>
+  <span
+    style={{
+      fontSize: fontSize === 32 ? '32px' : fontSize === 80 ? '80px' : '24px',
+      lineHeight: 1,
+      marginRight: fontSize === 32 ? '8px' : '0',
+    }}
+  >
     🌱
   </span>
 );
@@ -43,30 +43,32 @@ const Home = () => {
     {
       icon: <RecycleIcon />,
       title: 'Economía Circular',
-      description: 'Da una segunda vida a tus objetos y encuentra lo que necesitas de manera sostenible.'
+      description:
+        'Da una segunda vida a tus objetos y encuentra lo que necesitas de manera sostenible.',
     },
     {
       icon: <PeopleIcon />,
       title: 'Comunidad Local',
-      description: 'Conecta con personas de tu zona y fortalece los lazos comunitarios.'
+      description: 'Conecta con personas de tu zona y fortalece los lazos comunitarios.',
     },
     {
       icon: <LocationIcon />,
       title: 'Cerca de Ti',
-      description: 'Encuentra productos y servicios en tu área local para reducir la huella de carbono.'
+      description:
+        'Encuentra productos y servicios en tu área local para reducir la huella de carbono.',
     },
     {
       icon: <SecurityIcon />,
       title: 'Seguro y Confiable',
-      description: 'Sistema de reputación y verificación para transacciones seguras.'
-    }
+      description: 'Sistema de reputación y verificación para transacciones seguras.',
+    },
   ];
 
   const stats = [
     { number: '2,500+', label: 'Productos Donados', icon: <RecycleIcon /> },
     { number: '1,200+', label: 'Usuarios Activos', icon: <PeopleIcon /> },
     { number: '850kg', label: 'CO₂ Ahorrado', icon: <EcoIcon /> },
-    { number: '98%', label: 'Satisfacción', icon: <StarIcon /> }
+    { number: '98%', label: 'Satisfacción', icon: <StarIcon /> },
   ];
 
   const testimonials = [
@@ -74,26 +76,30 @@ const Home = () => {
       name: 'María González',
       location: 'Córdoba Capital',
       avatar: 'MG',
-      text: 'CirculApp me ayudó a encontrar muebles perfectos para mi nuevo hogar. ¡Es increíble lo que la gente dona!'
+      text: 'CirculApp me ayudó a encontrar muebles perfectos para mi nuevo hogar. ¡Es increíble lo que la gente dona!',
     },
     {
       name: 'Juan Pérez',
       location: 'Villa Carlos Paz',
       avatar: 'JP',
-      text: 'Logré darle nueva vida a electrodomésticos que ya no usaba. La plataforma es muy fácil de usar.'
+      text: 'Logré darle nueva vida a electrodomésticos que ya no usaba. La plataforma es muy fácil de usar.',
     },
     {
       name: 'Ana Rodríguez',
       location: 'Río Cuarto',
       avatar: 'AR',
-      text: 'Como productora, CirculApp me permite conectar con personas que valoran la sostenibilidad.'
-    }
+      text: 'Como productora, CirculApp me permite conectar con personas que valoran la sostenibilidad.',
+    },
   ];
 
   return (
     <Box>
       {/* Header/Navigation */}
-      <AppBar position="static" elevation={0} sx={{ bgcolor: 'transparent', color: 'primary.main' }}>
+      <AppBar
+        position="static"
+        elevation={0}
+        sx={{ bgcolor: 'transparent', color: 'primary.main' }}
+      >
         <Toolbar sx={{ justifyContent: 'space-between' }}>
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
             <EcoIcon fontSize={32} />
@@ -119,48 +125,48 @@ const Home = () => {
           color: 'white',
           py: 12,
           position: 'relative',
-          overflow: 'hidden'
+          overflow: 'hidden',
         }}
       >
         <Container maxWidth="lg">
           <Grid container spacing={6} alignItems="center">
             <Grid item xs={12} md={6}>
               <Typography variant="h2" component="h1" gutterBottom fontWeight="bold">
-                Conecta, Comparte, 
+                Conecta, Comparte,
                 <span style={{ color: '#81C784' }}> Cuida</span>
               </Typography>
               <Typography variant="h5" paragraph sx={{ opacity: 0.9, mb: 4 }}>
-                La plataforma que une a tu comunidad para crear un futuro más sostenible 
-                a través del intercambio responsable
+                La plataforma que une a tu comunidad para crear un futuro más sostenible a través
+                del intercambio responsable
               </Typography>
               <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
-                <Button 
-                  variant="contained" 
+                <Button
+                  variant="contained"
                   size="large"
-                  sx={{ 
-                    bgcolor: 'white', 
+                  sx={{
+                    bgcolor: 'white',
                     color: 'primary.main',
                     '&:hover': { bgcolor: 'grey.100' },
                     px: 4,
-                    py: 1.5
+                    py: 1.5,
                   }}
                   endIcon={<ArrowForward />}
                   onClick={() => navigate('/register')}
                 >
                   Comenzar Ahora
                 </Button>
-                <Button 
-                  variant="outlined" 
+                <Button
+                  variant="outlined"
                   size="large"
-                  sx={{ 
-                    borderColor: 'white', 
+                  sx={{
+                    borderColor: 'white',
                     color: 'white',
-                    '&:hover': { 
+                    '&:hover': {
                       borderColor: 'white',
-                      bgcolor: 'rgba(255, 255, 255, 0.1)'
+                      bgcolor: 'rgba(255, 255, 255, 0.1)',
                     },
                     px: 4,
-                    py: 1.5
+                    py: 1.5,
                   }}
                   onClick={() => navigate('/login')}
                 >
@@ -172,7 +178,7 @@ const Home = () => {
               <Box
                 sx={{
                   position: 'relative',
-                  textAlign: 'center'
+                  textAlign: 'center',
                 }}
               >
                 {/* Iconos flotantes simulando la app */}
@@ -186,11 +192,11 @@ const Home = () => {
                     alignItems: 'center',
                     justifyContent: 'center',
                     margin: '0 auto',
-                    position: 'relative'
+                    position: 'relative',
                   }}
                 >
                   <EcoIcon fontSize={80} />
-                  
+
                   {/* Iconos orbitando */}
                   <Box sx={{ position: 'absolute', top: -20, right: -20 }}>
                     <Avatar sx={{ bgcolor: 'secondary.main' }}>
@@ -222,19 +228,19 @@ const Home = () => {
         <Typography variant="h6" align="center" color="text.secondary" paragraph>
           Números que reflejan nuestro compromiso con la sostenibilidad
         </Typography>
-        
+
         <Grid container spacing={4} sx={{ mt: 4 }}>
           {stats.map((stat, index) => (
             <Grid item xs={12} sm={6} md={3} key={index}>
               <Card sx={{ textAlign: 'center', p: 2, height: '100%' }}>
                 <CardContent>
-                  <Avatar 
-                    sx={{ 
-                      bgcolor: 'primary.main', 
-                      width: 60, 
-                      height: 60, 
-                      mx: 'auto', 
-                      mb: 2 
+                  <Avatar
+                    sx={{
+                      bgcolor: 'primary.main',
+                      width: 60,
+                      height: 60,
+                      mx: 'auto',
+                      mb: 2,
                     }}
                   >
                     {stat.icon}
@@ -266,13 +272,13 @@ const Home = () => {
             {features.map((feature, index) => (
               <Grid item xs={12} md={6} key={index}>
                 <Card sx={{ p: 3, height: '100%', display: 'flex', alignItems: 'center' }}>
-                  <Avatar 
-                    sx={{ 
-                      bgcolor: 'primary.light', 
+                  <Avatar
+                    sx={{
+                      bgcolor: 'primary.light',
                       color: 'primary.main',
-                      width: 80, 
-                      height: 80, 
-                      mr: 3 
+                      width: 80,
+                      height: 80,
+                      mr: 3,
                     }}
                   >
                     {feature.icon}
@@ -307,16 +313,14 @@ const Home = () => {
               <Card sx={{ p: 3, height: '100%' }}>
                 <CardContent>
                   <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
-                    <Avatar sx={{ bgcolor: 'primary.main', mr: 2 }}>
-                      {testimonial.avatar}
-                    </Avatar>
+                    <Avatar sx={{ bgcolor: 'primary.main', mr: 2 }}>{testimonial.avatar}</Avatar>
                     <Box>
                       <Typography variant="subtitle1" fontWeight="bold">
                         {testimonial.name}
                       </Typography>
-                      <Chip 
-                        label={testimonial.location} 
-                        size="small" 
+                      <Chip
+                        label={testimonial.location}
+                        size="small"
                         variant="outlined"
                         icon={<LocationIcon />}
                       />
@@ -337,7 +341,7 @@ const Home = () => {
         sx={{
           bgcolor: 'primary.main',
           color: 'white',
-          py: 8
+          py: 8,
         }}
       >
         <Container maxWidth="md" sx={{ textAlign: 'center' }}>
@@ -348,40 +352,40 @@ const Home = () => {
             Únete a nuestra comunidad y comienza a contribuir a un futuro más sostenible hoy mismo
           </Typography>
           <Box sx={{ display: 'flex', gap: 2, justifyContent: 'center', flexWrap: 'wrap', mt: 4 }}>
-            <Button 
-              variant="contained" 
+            <Button
+              variant="contained"
               size="large"
-              sx={{ 
-                bgcolor: 'white', 
+              sx={{
+                bgcolor: 'white',
                 color: 'primary.main',
                 '&:hover': { bgcolor: 'grey.100' },
                 px: 4,
-                py: 1.5
+                py: 1.5,
               }}
               endIcon={<ArrowForward />}
               onClick={() => navigate('/register')}
             >
               Crear Cuenta Gratis
             </Button>
-            <Button 
-              variant="outlined" 
+            <Button
+              variant="outlined"
               size="large"
-              sx={{ 
-                borderColor: 'white', 
+              sx={{
+                borderColor: 'white',
                 color: 'white',
-                '&:hover': { 
+                '&:hover': {
                   borderColor: 'white',
-                  bgcolor: 'rgba(255, 255, 255, 0.1)'
+                  bgcolor: 'rgba(255, 255, 255, 0.1)',
                 },
                 px: 4,
-                py: 1.5
+                py: 1.5,
               }}
               onClick={() => navigate('/login')}
             >
               Ya Tengo Cuenta
             </Button>
           </Box>
-          
+
           <Typography variant="body2" sx={{ mt: 3, opacity: 0.7 }}>
             Gratis para siempre • Sin comisiones • 100% seguro
           </Typography>
@@ -393,7 +397,7 @@ const Home = () => {
         sx={{
           bgcolor: 'grey.900',
           color: 'white',
-          py: 6
+          py: 6,
         }}
       >
         <Container maxWidth="lg">
@@ -406,8 +410,8 @@ const Home = () => {
                 </Typography>
               </Box>
               <Typography variant="body2" sx={{ opacity: 0.8 }}>
-                La plataforma que conecta comunidades para crear un futuro más sostenible 
-                a través de la economía circular.
+                La plataforma que conecta comunidades para crear un futuro más sostenible a través
+                de la economía circular.
               </Typography>
             </Grid>
 
@@ -455,7 +459,7 @@ const Home = () => {
               borderColor: 'rgba(255, 255, 255, 0.1)',
               mt: 4,
               pt: 4,
-              textAlign: 'center'
+              textAlign: 'center',
             }}
           >
             <Typography variant="body2" sx={{ opacity: 0.7 }}>
