@@ -10,7 +10,7 @@ const authReducer = (state, action) => {
       return {
         ...state,
         loading: true,
-        error: null
+        error: null,
       };
     case 'LOGIN_SUCCESS':
       localStorage.setItem('authToken', action.payload.token);
@@ -21,7 +21,7 @@ const authReducer = (state, action) => {
         isAuthenticated: true,
         user: action.payload.user,
         token: action.payload.token,
-        error: null
+        error: null,
       };
     case 'LOGIN_FAILURE':
       localStorage.removeItem('authToken');
@@ -32,7 +32,7 @@ const authReducer = (state, action) => {
         isAuthenticated: false,
         user: null,
         token: null,
-        error: action.payload
+        error: action.payload,
       };
     case 'LOGOUT':
       localStorage.removeItem('authToken');
@@ -43,24 +43,24 @@ const authReducer = (state, action) => {
         user: null,
         token: null,
         loading: false,
-        error: null
+        error: null,
       };
     case 'UPDATE_USER':
       const updatedUser = { ...state.user, ...action.payload };
       localStorage.setItem('user', JSON.stringify(updatedUser));
       return {
         ...state,
-        user: updatedUser
+        user: updatedUser,
       };
     case 'SET_LOADING':
       return {
         ...state,
-        loading: action.payload
+        loading: action.payload,
       };
     case 'CLEAR_ERROR':
       return {
         ...state,
-        error: null
+        error: null,
       };
     default:
       return state;
@@ -72,7 +72,7 @@ const initialState = {
   user: null,
   token: null,
   loading: true,
-  error: null
+  error: null,
 };
 
 export const AuthProvider = ({ children }) => {
@@ -92,8 +92,8 @@ export const AuthProvider = ({ children }) => {
             type: 'LOGIN_SUCCESS',
             payload: {
               token,
-              user: response.data.user
-            }
+              user: response.data.user,
+            },
           });
         } catch (error) {
           // Token inválido o expirado
@@ -107,17 +107,17 @@ export const AuthProvider = ({ children }) => {
     initializeAuth();
   }, []);
 
-  const login = async (credentials) => {
+  const login = async credentials => {
     try {
       dispatch({ type: 'LOGIN_START' });
       const response = await authService.login(credentials);
-      
+
       dispatch({
         type: 'LOGIN_SUCCESS',
         payload: {
           token: response.data.token,
-          user: response.data.user
-        }
+          user: response.data.user,
+        },
       });
 
       return { success: true, data: response.data };
@@ -125,23 +125,23 @@ export const AuthProvider = ({ children }) => {
       const errorMessage = error.response?.data?.message || 'Error en el inicio de sesión';
       dispatch({
         type: 'LOGIN_FAILURE',
-        payload: errorMessage
+        payload: errorMessage,
       });
       return { success: false, error: errorMessage };
     }
   };
 
-  const register = async (userData) => {
+  const register = async userData => {
     try {
       dispatch({ type: 'LOGIN_START' });
       const response = await authService.register(userData);
-      
+
       dispatch({
         type: 'LOGIN_SUCCESS',
         payload: {
           token: response.data.token,
-          user: response.data.user
-        }
+          user: response.data.user,
+        },
       });
 
       return { success: true, data: response.data };
@@ -149,7 +149,7 @@ export const AuthProvider = ({ children }) => {
       const errorMessage = error.response?.data?.message || 'Error en el registro';
       dispatch({
         type: 'LOGIN_FAILURE',
-        payload: errorMessage
+        payload: errorMessage,
       });
       return { success: false, error: errorMessage };
     }
@@ -165,10 +165,10 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const updateUser = (userData) => {
+  const updateUser = userData => {
     dispatch({
       type: 'UPDATE_USER',
-      payload: userData
+      payload: userData,
     });
   };
 
@@ -177,9 +177,9 @@ export const AuthProvider = ({ children }) => {
   };
 
   // Función para verificar permisos
-  const hasPermission = (permission) => {
+  const hasPermission = permission => {
     if (!state.user) return false;
-    
+
     switch (permission) {
       case 'admin':
         return state.user.userType === 'comuna';
@@ -199,14 +199,10 @@ export const AuthProvider = ({ children }) => {
     logout,
     updateUser,
     clearError,
-    hasPermission
+    hasPermission,
   };
 
-  return (
-    <AuthContext.Provider value={value}>
-      {children}
-    </AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
 
 export const useAuth = () => {
