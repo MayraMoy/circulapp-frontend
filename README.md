@@ -13,7 +13,7 @@ Este proyecto es la interfaz de usuario de Circulapp, una aplicación orientada 
 
 ## Tecnologías utilizadas
 
-- **React** (JavaScript/TypeScript)
+- **React** (JavaScript)
 - **Vite** o **Create React App** (según configuración)
 - **CSS Modules** / **Styled Components** / **Tailwind** (dependiendo del stack usado)
 - **Axios** para solicitudes HTTP
