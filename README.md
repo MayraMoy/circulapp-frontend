@@ -1,70 +1,84 @@
-# Getting Started with Create React App
+# Circulapp Frontend
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+¡Bienvenido a **Circulapp Frontend**!  
+Este proyecto es la interfaz de usuario de Circulapp, una aplicación orientada a la economía circular, sostenibilidad y gestión de recursos. Está desarrollado principalmente con **React** y otras tecnologías modernas de frontend.
 
-## Available Scripts
+## Características
 
-In the project directory, you can run:
+- Interfaz intuitiva para usuarios finales
+- Visualización de recursos disponibles y gestionados
+- Flujos para registro, inicio de sesión y administración
+- Integración con API backend para datos dinámicos
+- Diseño responsivo adaptable a diferentes dispositivos
 
-### `npm start`
+## Tecnologías utilizadas
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- **React** (JavaScript/TypeScript)
+- **Vite** o **Create React App** (según configuración)
+- **CSS Modules** / **Styled Components** / **Tailwind** (dependiendo del stack usado)
+- **Axios** para solicitudes HTTP
+- **React Router** para navegación
+- Otros: ver `package.json`
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Instalación
 
-### `npm test`
+1. Clona el repositorio:
+   ```bash
+   git clone https://github.com/MayraMoy/circulapp-frontend.git
+   cd circulapp-frontend
+   ```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+2. Instala las dependencias:
+   ```bash
+   npm install
+   # o
+   yarn install
+   ```
 
-### `npm run build`
+3. Inicia el proyecto:
+   ```bash
+   npm run dev
+   # o
+   yarn dev
+   ```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Uso
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- Accede a la aplicación en [http://localhost:3000](http://localhost:3000) (o el puerto configurado).
+- Regístrate o inicia sesión para comenzar a usar las funcionalidades.
+- Explora las diferentes secciones y gestiona recursos de acuerdo a tus necesidades.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Configuración
 
-### `npm run eject`
+Si necesitas conectar con un backend, configura las variables de entorno en un archivo `.env`:
+```
+VITE_API_URL=https://tuservidorbackend.com/api
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## Estructura del proyecto
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```
+src/
+│
+├── components/       # Componentes reutilizables
+├── pages/            # Vistas principales
+├── services/         # Lógica para consumo de APIs
+├── assets/           # Imágenes, estilos, fuentes
+├── App.jsx           # Componente raíz de la aplicación
+└── main.jsx          # Punto de entrada
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## Contribución
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+¡Las contribuciones son bienvenidas!  
+Por favor abre un issue o pull request para sugerencias, mejoras o correcciones.
 
-## Learn More
+## Licencia
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Este proyecto está bajo la licencia MIT. Consulta el archivo `LICENSE` para más detalles.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+---
 
-### Code Splitting
+**Contacto:**  
+¿Dudas o comentarios? Puedes contactar a [MayraMoy](https://github.com/MayraMoy) directamente en GitHub.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
