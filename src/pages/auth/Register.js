@@ -1,5 +1,5 @@
 // pages/auth/Register.js
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import {
   Container,
@@ -17,11 +17,6 @@ import {
   Step,
   StepLabel,
   Grid,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-  FormHelperText,
 } from '@mui/material';
 import {
   Person as PersonIcon,
