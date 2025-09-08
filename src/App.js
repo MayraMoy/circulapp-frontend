@@ -44,9 +44,9 @@ const theme = createTheme({
       dark: '#6C3483',
     },
     background: {
-      default: '#FAFBFC', // Fondo más suave
+      default: '#EFEFEF', // Fondo más suave
       paper: '#FFFFFF',
-      subtle: '#F8F9FA', // Fondo sutil para cards
+      subtle: '#EFEFEF', // Fondo sutil para cards
     },
     success: {
       main: '#27AE60',
@@ -172,7 +172,6 @@ const theme = createTheme({
     MuiCssBaseline: {
       styleOverrides: `
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
-        
         * {
           box-sizing: border-box;
         }
