@@ -93,30 +93,8 @@ const Dashboard = () => {
         setNearbyProducts(nearby.data.products?.slice(0, 4) || []);
       }
 
-      // Simular actividad reciente
-      setRecentActivity([
-        {
-          id: 1,
-          type: 'product_created',
-          message: 'Publicaste "Mesa de madera"',
-          time: '2 horas',
-          icon: AddIcon,
-        },
-        {
-          id: 2,
-          type: 'message_received',
-          message: 'Nuevo mensaje de Juan Pérez',
-          time: '5 horas',
-          icon: Chat,
-        },
-        {
-          id: 3,
-          type: 'transaction_completed',
-          message: 'Transacción completada exitosamente',
-          time: '1 día',
-          icon: TrendingUp,
-        },
-      ]);
+      // Eliminar notificaciones predeterminadas
+      setRecentActivity([]); // O cargar desde una fuente real si existe
     } catch (error) {
       console.error('Error cargando dashboard:', error);
     } finally {
@@ -408,22 +386,26 @@ const Dashboard = () => {
               <Typography variant="h6" fontWeight="bold" gutterBottom>
                 Actividad Reciente
               </Typography>
-              {recentActivity.map(activity => {
-                const IconComponent = activity.icon;
-                return (
-                  <Box key={activity.id} sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
-                    <Avatar sx={{ bgcolor: 'primary.light', mr: 2, width: 32, height: 32 }}>
-                      <IconComponent sx={{ fontSize: 16 }} />
-                    </Avatar>
-                    <Box sx={{ flex: 1 }}>
-                      <Typography variant="body2">{activity.message}</Typography>
-                      <Typography variant="caption" color="text.secondary">
-                        Hace {activity.time}
-                      </Typography>
+              {recentActivity.length === 0 ? (
+                <Alert severity="info">No hay actividad reciente.</Alert>
+              ) : (
+                recentActivity.map(activity => {
+                  const IconComponent = activity.icon;
+                  return (
+                    <Box key={activity.id} sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
+                      <Avatar sx={{ bgcolor: 'primary.light', mr: 2, width: 32, height: 32 }}>
+                        <IconComponent sx={{ fontSize: 16 }} />
+                      </Avatar>
+                      <Box sx={{ flex: 1 }}>
+                        <Typography variant="body2">{activity.message}</Typography>
+                        <Typography variant="caption" color="text.secondary">
+                          Hace {activity.time}
+                        </Typography>
+                      </Box>
                     </Box>
-                  </Box>
-                );
-              })}
+                  );
+                })
+              )}
             </CardContent>
           </Card>
         </Grid>

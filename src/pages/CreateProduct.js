@@ -1,4 +1,4 @@
-// src/pages/CreateProduct.js
+// src/pages/CreateProduct.js - CORREGIDO
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -18,12 +18,11 @@ import {
   Card,
   CardMedia,
   IconButton,
-  Chip,
   LinearProgress,
 } from '@mui/material';
-import { CloudUpload, Delete, ArrowBack, Save, Visibility } from '@mui/icons-material';
+import { CloudUpload, Delete, ArrowBack, Save } from '@mui/icons-material';
 import { useAuth } from '../context/AuthContext';
-import { productService } from '../services/api';
+import { productService, createFormData } from '../services/api';
 
 const CreateProduct = () => {
   const navigate = useNavigate();
@@ -31,20 +30,20 @@ const CreateProduct = () => {
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-  const [uploadProgress, setUploadProgress] = useState(0);
 
   const [formData, setFormData] = useState({
     title: '',
     description: '',
     category: '',
     condition: '',
-    material: '',
-    dimensions: '',
     location: {
       address: user?.location?.address || '',
       city: user?.location?.city || '',
       province: user?.location?.province || '',
-      coordinates: user?.location?.coordinates || { lat: null, lng: null },
+      coordinates: {
+        lat: user?.location?.coordinates?.lat || -34.6037, // Buenos Aires por defecto
+        lng: user?.location?.coordinates?.lng || -58.3816
+      },
     },
   });
 
@@ -52,20 +51,28 @@ const CreateProduct = () => {
   const [imagePreviews, setImagePreviews] = useState([]);
   const [errors, setErrors] = useState({});
 
+  // CATEGORÍAS CORREGIDAS (coinciden con el modelo backend)
   const categories = [
-    'Electrónicos',
-    'Muebles',
-    'Ropa',
-    'Libros',
-    'Deportes',
-    'Juguetes',
-    'Hogar',
-    'Jardín',
-    'Herramientas',
-    'Otros',
+    { value: 'electronics', label: 'Electrónicos' },
+    { value: 'furniture', label: 'Muebles' },
+    { value: 'clothing', label: 'Ropa' },
+    { value: 'books', label: 'Libros' },
+    { value: 'tools', label: 'Herramientas' },
+    { value: 'appliances', label: 'Electrodomésticos' },
+    { value: 'sports', label: 'Deportes' },
+    { value: 'toys', label: 'Juguetes' },
+    { value: 'kitchen', label: 'Cocina' },
+    { value: 'garden', label: 'Jardín' },
+    { value: 'other', label: 'Otros' },
   ];
 
-  const conditions = ['Nuevo', 'Como nuevo', 'Muy bueno', 'Bueno', 'Regular'];
+  // CONDICIONES CORREGIDAS (coinciden con el modelo backend)
+  const conditions = [
+    { value: 'excellent', label: 'Excelente' },
+    { value: 'good', label: 'Bueno' },
+    { value: 'fair', label: 'Regular' },
+    { value: 'poor', label: 'Malo' },
+  ];
 
   const handleInputChange = e => {
     const { name, value } = e.target;
@@ -95,8 +102,7 @@ const CreateProduct = () => {
     }
 
     files.forEach(file => {
-      if (file.size > 5 * 1024 * 1024) {
-        // 5MB
+      if (file.size > 5 * 1024 * 1024) { // 5MB
         setError('Cada imagen debe ser menor a 5MB');
         return;
       }
@@ -121,10 +127,23 @@ const CreateProduct = () => {
     const newErrors = {};
 
     if (!formData.title.trim()) newErrors.title = 'El título es requerido';
+    if (formData.title.length < 5 || formData.title.length > 100) {
+      newErrors.title = 'El título debe tener entre 5 y 100 caracteres';
+    }
+    
     if (!formData.description.trim()) newErrors.description = 'La descripción es requerida';
+    if (formData.description.length < 10 || formData.description.length > 1000) {
+      newErrors.description = 'La descripción debe tener entre 10 y 1000 caracteres';
+    }
+    
     if (!formData.category) newErrors.category = 'La categoría es requerida';
     if (!formData.condition) newErrors.condition = 'La condición es requerida';
-    if (!formData.location.city.trim()) newErrors['location.city'] = 'La ciudad es requerida';
+    if (!formData.location.address.trim()) newErrors.address = 'La dirección es requerida';
+    
+    // Validar coordenadas
+    if (!formData.location.coordinates.lat || !formData.location.coordinates.lng) {
+      newErrors.coordinates = 'Las coordenadas son requeridas';
+    }
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -139,26 +158,44 @@ const CreateProduct = () => {
       setLoading(true);
       setError('');
 
-      // Crear producto
-      const productResponse = await productService.createProduct(formData);
-      const productId = productResponse.data._id;
+      // Crear FormData para enviar todo junto (producto + imágenes)
+      const submitFormData = new FormData();
+      
+      // Agregar datos del producto
+      submitFormData.append('title', formData.title);
+      submitFormData.append('description', formData.description);
+      submitFormData.append('category', formData.category);
+      submitFormData.append('condition', formData.condition);
+      submitFormData.append('location[address]', formData.location.address);
+      submitFormData.append('location[city]', formData.location.city);
+      submitFormData.append('location[province]', formData.location.province);
+      submitFormData.append('location[coordinates][lat]', formData.location.coordinates.lat);
+      submitFormData.append('location[coordinates][lng]', formData.location.coordinates.lng);
 
-      // Subir imágenes si existen
-      if (images.length > 0) {
-        const imageFormData = new FormData();
-        images.forEach(image => {
-          imageFormData.append('images', image);
-        });
+      // Agregar imágenes
+      images.forEach((image, index) => {
+        submitFormData.append('images', image);
+      });
 
-        await productService.uploadImages(productId, imageFormData);
-      }
+      // Crear producto con imágenes en una sola petición
+      const response = await productService.createProduct(submitFormData);
 
-      navigate(`/products/${productId}`, {
+      navigate(`/products/${response.data.product._id}`, {
         state: { message: 'Producto creado exitosamente' },
       });
     } catch (err) {
-      setError(err.response?.data?.message || 'Error al crear el producto');
       console.error('Error creating product:', err);
+      
+      // Mostrar errores de validación si existen
+      if (err.response?.data?.errors) {
+        const backendErrors = {};
+        err.response.data.errors.forEach(error => {
+          backendErrors[error.path] = error.msg;
+        });
+        setErrors(backendErrors);
+      } else {
+        setError(err.response?.data?.message || 'Error al crear el producto');
+      }
     } finally {
       setLoading(false);
     }
@@ -199,8 +236,9 @@ const CreateProduct = () => {
                 value={formData.title}
                 onChange={handleInputChange}
                 error={!!errors.title}
-                helperText={errors.title}
+                helperText={errors.title || 'Entre 5 y 100 caracteres'}
                 required
+                inputProps={{ maxLength: 100 }}
               />
             </Grid>
 
@@ -214,9 +252,10 @@ const CreateProduct = () => {
                 value={formData.description}
                 onChange={handleInputChange}
                 error={!!errors.description}
-                helperText={errors.description}
+                helperText={errors.description || 'Entre 10 y 1000 caracteres'}
                 placeholder="Describe tu producto, su estado, uso, etc."
                 required
+                inputProps={{ maxLength: 1000 }}
               />
             </Grid>
 
@@ -230,8 +269,8 @@ const CreateProduct = () => {
                   onChange={handleInputChange}
                 >
                   {categories.map(category => (
-                    <MenuItem key={category} value={category}>
-                      {category}
+                    <MenuItem key={category.value} value={category.value}>
+                      {category.label}
                     </MenuItem>
                   ))}
                 </Select>
@@ -249,35 +288,13 @@ const CreateProduct = () => {
                   onChange={handleInputChange}
                 >
                   {conditions.map(condition => (
-                    <MenuItem key={condition} value={condition}>
-                      {condition}
+                    <MenuItem key={condition.value} value={condition.value}>
+                      {condition.label}
                     </MenuItem>
                   ))}
                 </Select>
                 {errors.condition && <FormHelperText>{errors.condition}</FormHelperText>}
               </FormControl>
-            </Grid>
-
-            <Grid item xs={12} sm={6}>
-              <TextField
-                fullWidth
-                name="material"
-                label="Material"
-                value={formData.material}
-                onChange={handleInputChange}
-                placeholder="Ej: Madera, Plástico, Metal..."
-              />
-            </Grid>
-
-            <Grid item xs={12} sm={6}>
-              <TextField
-                fullWidth
-                name="dimensions"
-                label="Dimensiones"
-                value={formData.dimensions}
-                onChange={handleInputChange}
-                placeholder="Ej: 50x30x20 cm"
-              />
             </Grid>
 
             {/* Ubicación */}
@@ -294,6 +311,9 @@ const CreateProduct = () => {
                 label="Dirección"
                 value={formData.location.address}
                 onChange={handleInputChange}
+                error={!!errors.address}
+                helperText={errors.address}
+                required
               />
             </Grid>
 
@@ -304,9 +324,6 @@ const CreateProduct = () => {
                 label="Ciudad"
                 value={formData.location.city}
                 onChange={handleInputChange}
-                error={!!errors['location.city']}
-                helperText={errors['location.city']}
-                required
               />
             </Grid>
 
@@ -320,10 +337,18 @@ const CreateProduct = () => {
               />
             </Grid>
 
+            {errors.coordinates && (
+              <Grid item xs={12}>
+                <Alert severity="warning">
+                  {errors.coordinates}. Usando coordenadas de Buenos Aires por defecto.
+                </Alert>
+              </Grid>
+            )}
+
             {/* Imágenes */}
             <Grid item xs={12}>
               <Typography variant="h6" gutterBottom sx={{ mt: 2 }}>
-                Imágenes
+                Imágenes (Opcional)
               </Typography>
 
               <Box sx={{ mb: 2 }}>

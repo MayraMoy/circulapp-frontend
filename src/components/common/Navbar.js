@@ -84,9 +84,6 @@ const Navbar = () => {
 
   // Datos simulados de notificaciones
   const notifications = [
-    { id: 1, message: 'Nueva solicitud para tu producto', time: '5 min' },
-    { id: 2, message: 'Mensaje nuevo en el chat', time: '10 min' },
-    { id: 3, message: 'Tu transacción fue completada', time: '1 hora' },
   ];
 
   return (
